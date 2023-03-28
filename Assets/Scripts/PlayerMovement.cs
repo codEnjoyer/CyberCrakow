@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
@@ -42,14 +41,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody _rb;
 
-    private MovementState _movementState;
+    // private MovementState _movementState;
 
-    private enum MovementState
-    {
-        Walking,
-        Sprinting,
-        Air
-    }
+    // private enum MovementState
+    // {
+    //     Walking,
+    //     Sprinting,
+    //     Air
+    // }
 
     private void Start()
     {
@@ -96,16 +95,16 @@ public class PlayerMovement : MonoBehaviour
         switch (_grounded)
         {
             case true when Input.GetKey(sprintKey):
-                _movementState = MovementState.Sprinting;
+                // _movementState = MovementState.Sprinting;
                 moveSpeed = sprintSpeed;
                 break;
             case true:
-                _movementState = MovementState.Walking;
+                // _movementState = MovementState.Walking;
                 moveSpeed = walkSpeed;
                 break;
-            default:
-                _movementState = MovementState.Air;
-                break;
+            // default:
+            //     _movementState = MovementState.Air;
+            //     break;
         }
     }
 
