@@ -2,18 +2,19 @@ using UnityEngine;
 
 namespace ScriptableObjects.Items.Scripts
 {
-    internal enum ItemType
+    public enum ItemType
     {
+        Default,
         Food,
         Equipment,
-        Default
     }
 
-    internal abstract class ItemObject : ScriptableObject
+    public abstract class ItemObject : ScriptableObject
     {
-        internal GameObject Prefab;
-        internal ItemType Type;
+        public GameObject prefab;
+        public ItemType type;
+
         [TextArea(15, 20)]
-        internal string Description;
+        public string description;
     }
 }
