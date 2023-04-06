@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 223141808}
   - component: {fileID: 223141807}
   - component: {fileID: 223141812}
-  - component: {fileID: 223141811}
+  - component: {fileID: 223141813}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -225,35 +225,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &223141811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223141805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62c0823bf8e0477da878a99e4ecce310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 5
-  walkSpeed: 7
-  sprintSpeed: 10
-  groundDrag: 5
-  jumpForce: 10
-  jumpCooldown: 0.5
-  airMultiplier: 2
-  jumpKey: 32
-  sprintKey: 304
-  playerHeight: 2
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  maxSlopeAngle: 0
-  orientation: {fileID: 758487225}
-  horizontalInput: 0
-  verticalInput: 0
 --- !u!54 &223141812
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -270,6 +241,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &223141813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223141805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c302c94eb855bcc44b0cbe67917a4f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingSpeed: 5
+  sprintSpeed: 10
+  groundDrag: 5
+  jumpForce: 10
+  jumpCooldown: 0.25
+  airMultiplyer: 6
+  readyToJump: 1
+  jumpKey: 32
+  sprintKey: 304
+  playerHeight: 2
+  maxSlopeAngle: 40
+  exitingSlope: 0
+  orientation: {fileID: 758487225}
 --- !u!1 &383860696
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +568,7 @@ GameObject:
   - component: {fileID: 1062688915}
   - component: {fileID: 1062688914}
   - component: {fileID: 1062688913}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -586,14 +582,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062688911}
-  m_LocalRotation: {x: -0.37642232, y: -0, z: -0, w: 0.9264482}
+  m_LocalRotation: {x: -0.27723178, y: -0, z: -0, w: 0.9608031}
   m_LocalPosition: {x: 0, y: 5.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 383860697}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -44.224, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -32.19, y: 0, z: 0}
 --- !u!64 &1062688913
 MeshCollider:
   m_ObjectHideFlags: 0
