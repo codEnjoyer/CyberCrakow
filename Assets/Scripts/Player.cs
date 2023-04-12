@@ -9,10 +9,21 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var item = other.GetComponent<Item>();
-        if (item)
+        if (!item) return;
+        inventory.AddItem(item.item, 1);
+        Destroy(other.gameObject);
+    }
+
+    private void Update()
+    {
+        // just for testing purpose
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            inventory.AddItem(item.item, 1);
-            Destroy(other.gameObject);
+            inventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            inventory.Load();
         }
     }
 
