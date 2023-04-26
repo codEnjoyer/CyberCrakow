@@ -31,8 +31,11 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float _sightOffset;
     [SerializeField] private float _sightTime;
     [SerializeField] private Vector3 _weaponSwayPosition;
+
+    private Recoil _recoilScript;
+
+    //Hidden stats;
     private Vector3 _weaponSwayPositionVelocity;
-    private float _camFovVelocity;
 
     //Graphics
     [SerializeField] private GameObject _muzzleFlash;
@@ -45,6 +48,7 @@ public class WeaponController : MonoBehaviour
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
+        _recoilScript = GameObject.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
     }
 
     // Update is called once per frame
@@ -149,7 +153,7 @@ public class WeaponController : MonoBehaviour
         {
             Instantiate(_muzzleFlash, _attackPoint.position, Quaternion.identity);
         }
-
+        _recoilScript.RecoilFire();
         _bulletsLeft--;
         _bulletsShot++;
 

@@ -148,13 +148,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115062034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.083, y: -0.568, z: 0.417}
+  m_LocalPosition: {x: 0.083000004, y: -0.568, z: 0.417}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1667940527}
   m_Father: {fileID: 963194228}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &115062036
 MonoBehaviour:
@@ -180,10 +180,16 @@ MonoBehaviour:
   _bulletsPerTap: 1
   _allowButtonHold: 0
   _zoomRatio: 0
+  _recoilX: 0
+  _recoilY: 0
+  _recoilZ: 0
+  _snappiness: 0
+  _returnSpeed: 0
   _fpsCam: {fileID: 963194227}
   _attackPoint: {fileID: 880277003}
   _sightTarget: {fileID: 880277003}
   _weaponSway: {fileID: 880277002}
+  _recoilCam: {fileID: 0}
   _sightOffset: 0
   _sightTime: 0
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
@@ -331,6 +337,7 @@ GameObject:
   - component: {fileID: 457653902}
   - component: {fileID: 457653901}
   - component: {fileID: 457653904}
+  - component: {fileID: 457653905}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -352,7 +359,7 @@ Transform:
   m_Children:
   - {fileID: 1427352401}
   m_Father: {fileID: 963194228}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &457653901
 BoxCollider:
@@ -439,18 +446,119 @@ MonoBehaviour:
   _timeBetweenShots: 0
   _magazineSize: 30
   _bulletsPerTap: 1
-  _allowButtonHold: 1
+  _allowButtonHold: 0
   _zoomRatio: 2
+  _recoilX: -2
+  _recoilY: 6
+  _recoilZ: 0.35
+  _snappiness: 6
+  _returnSpeed: 2
   _fpsCam: {fileID: 963194227}
   _attackPoint: {fileID: 1442750151}
   _sightTarget: {fileID: 2084030245}
   _weaponSway: {fileID: 1427352400}
+  _recoilCam: {fileID: 480414023}
   _sightOffset: 0.3
-  _sightTime: 1
+  _sightTime: 2
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
   _muzzleFlash: {fileID: 0}
   _ammunitionDisplay: {fileID: 0}
   _allowInvoke: 1
+--- !u!114 &457653905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457653899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f26e05995d3c04eb13540ac5e69fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentRotation: {x: 0, y: 0, z: 0}
+  _targetRotation: {x: 0, y: 0, z: 0}
+  _recoilX: 0
+  _recoilY: 0
+  _recoilZ: 0
+  _snappiness: 0
+  _returnSpeed: 0
+--- !u!1 &480414021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480414022}
+  - component: {fileID: 480414023}
+  m_Layer: 0
+  m_Name: RecoilCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &480414022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480414021}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 963194228}
+  m_Father: {fileID: 1889719789}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &480414023
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480414021}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,9 +896,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 115062035}
   - {fileID: 457653900}
-  m_Father: {fileID: 1889719789}
+  - {fileID: 115062035}
+  m_Father: {fileID: 480414022}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963194229
@@ -1399,7 +1507,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 963194228}
+  - {fileID: 480414022}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
