@@ -7,7 +7,7 @@ public class BulletController : MonoBehaviour
     //assignables
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private GameObject _explosion;
-    private LayerMask _whatIsEnemies;
+    [SerializeField] private LayerMask _whatIsEnemies;
 
     //Stats
     [Range(0f,1f)]

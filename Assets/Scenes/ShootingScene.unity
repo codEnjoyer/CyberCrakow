@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,7 +152,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 880277003}
+  - {fileID: 1667940527}
   m_Father: {fileID: 963194228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -182,10 +182,10 @@ MonoBehaviour:
   _zoomRatio: 0
   _fpsCam: {fileID: 963194227}
   _attackPoint: {fileID: 880277003}
-  _sightTarget: {fileID: 0}
-  _weaponSway: {fileID: 0}
+  _sightTarget: {fileID: 880277003}
+  _weaponSway: {fileID: 880277002}
   _sightOffset: 0
-  _sightSpeed: 0
+  _sightTime: 0
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
   _muzzleFlash: {fileID: 0}
   _ammunitionDisplay: {fileID: 0}
@@ -440,13 +440,13 @@ MonoBehaviour:
   _magazineSize: 30
   _bulletsPerTap: 1
   _allowButtonHold: 1
-  _zoomRatio: 3
+  _zoomRatio: 2
   _fpsCam: {fileID: 963194227}
   _attackPoint: {fileID: 1442750151}
   _sightTarget: {fileID: 2084030245}
   _weaponSway: {fileID: 1427352400}
-  _sightOffset: 1
-  _sightSpeed: 1
+  _sightOffset: 0.3
+  _sightTime: 1
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
   _muzzleFlash: {fileID: 0}
   _ammunitionDisplay: {fileID: 0}
@@ -667,12 +667,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880277002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.055000007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 115062035}
+  m_Father: {fileID: 1667940527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &916218951
@@ -1045,23 +1045,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1358422770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21410cc7c8d32e546adf93bf444114eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 62c0823bf8e0477da878a99e4ecce310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 10
   walkSpeed: 5
-  sprintSpeed: 8
-  groundDrag: 5
-  jumpForce: 5
-  jumpCooldown: 0.25
-  airMultiplyer: 0.4
+  sprintSpeed: 20
+  groundDrag: 3
+  jumpForce: 20
+  jumpCooldown: 0.2
+  airMultiplier: 0
   jumpKey: 32
   sprintKey: 304
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2147483647
+  maxSlopeAngle: 0
   orientation: {fileID: 248177025}
-  state: 0
+  horizontalInput: 0
+  verticalInput: 0
 --- !u!1 &1427352400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,6 +1325,38 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1601503510}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1667940526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1667940527}
+  m_Layer: 0
+  m_Name: GrenadeSway
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1667940527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667940526}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 880277003}
+  m_Father: {fileID: 115062035}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1889719787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,7 +1427,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2084030244}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6100002, z: 0}
+  m_LocalPosition: {x: 0, y: 0.529, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
