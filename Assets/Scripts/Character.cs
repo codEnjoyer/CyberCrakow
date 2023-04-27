@@ -10,7 +10,9 @@ namespace myStateMachine
         public StandingState standing;
         public SprintingState sprinting;
         public JumpingState jumping;
+        public WalkingState walking;
         public StateMachine movementSM;
+        public AirState air;
         [Header("Movement")]
         public float walkingSpeed;
         public float sprintSpeed;
@@ -44,6 +46,10 @@ namespace myStateMachine
         static List<Collider> groundTouchPoints = new List<Collider>();
         public float moveSpeed {get;set;}
 
+        public bool IsJumpPressed { get; set; }
+        public bool IsSprintPressed { get; set; }
+        public float horizontalInput { get; set; }
+        public float verticalInput { get; set; }
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
@@ -54,6 +60,8 @@ namespace myStateMachine
             standing = new StandingState(this, movementSM);
             jumping = new JumpingState(this, movementSM);
             sprinting = new SprintingState(this, movementSM);
+            walking = new WalkingState(this, movementSM);
+            air = new AirState(this, movementSM);
             movementSM.Initialize(standing);
         }
         private void Update()
@@ -70,31 +78,33 @@ namespace myStateMachine
 
         public bool CheckIfGrounded()
         {
-            return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-            //return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+            //Debug.Log(Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f));
+            //return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+            return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
         }
 
-        public void MovePlayer(float horizontalInput, float verticalInput,bool grounded,float moveSpeed)
+        public void MovePlayer(float horizontalInput, float verticalInput,float moveSpeed)
         {
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
             if (OnSlope() && !exitingSlope)
             {
-                Debug.Log("on slope");
+                Debug.DrawRay(transform.position, GetSlopeMoveDirection(),Color.green,1f);
                 rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
                 rb.drag = groundDrag + 6;
-                if (rb.velocity.y > 0)
-                {
-                    rb.AddForce(Vector3.down * 80f, ForceMode.Force);
-                }
             }
-            if (grounded)
+            if (!OnSlope())
+            {
                 rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            else if (!grounded)
-                rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplyer, ForceMode.Force);
-            rb.drag = groundDrag;
+                rb.drag = groundDrag;
+            }
             rb.useGravity = !OnSlope();            
         }
-
+        public void AirMovement(float horizontalInput, float verticalInput, float moveSpeed)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplyer, ForceMode.Force);
+            rb.drag = 0;
+            rb.useGravity = true;
+        }
         public void SpeedControl()
         {
             if (OnSlope() && !exitingSlope)
@@ -122,7 +132,6 @@ namespace myStateMachine
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             Invoke(nameof(ResetJump), jumpCooldown);
-
         }
 
         public void ResetJump()
@@ -131,6 +140,10 @@ namespace myStateMachine
             exitingSlope = false;
         }
 
+        public void StopMovement()
+        {
+            rb.velocity = new Vector3(0f, 0f, 0f);
+        }
         private bool OnSlope()
         {
             if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))

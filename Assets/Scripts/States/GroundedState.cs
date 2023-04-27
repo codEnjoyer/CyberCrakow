@@ -9,9 +9,6 @@ namespace myStateMachine
     public class GroundedState : State
     {
 
-            private float horizontalInput;
-            private float verticalInput;
-            private bool jump;
 
             public GroundedState(Character character, StateMachine stateMachine) : base(character, stateMachine)
             {
@@ -20,8 +17,8 @@ namespace myStateMachine
             public override void Enter()
             {
                 base.Enter();
-                horizontalInput = verticalInput = 0.0f;
-                jump = false;
+                character.horizontalInput = character.verticalInput = 0.0f;
+                character.IsJumpPressed = false;
             }
 
             public override void Exit()
@@ -32,25 +29,23 @@ namespace myStateMachine
             public override void HandleInput()
             {
                 base.HandleInput();
-                verticalInput = Input.GetAxisRaw("Vertical");
-                horizontalInput = Input.GetAxisRaw("Horizontal");
-                jump = Input.GetButtonDown("Jump");
+                character.IsSprintPressed = Input.GetKey(character.sprintKey);
+                character.IsJumpPressed = Input.GetButtonDown("Jump");
+                character.verticalInput = Input.GetAxisRaw("Vertical");
+                character.horizontalInput = Input.GetAxisRaw("Horizontal");
             }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (jump && character.readyToJump)
+            if (!character.CheckIfGrounded())
             {
-                stateMachine.ChangeState(character.jumping);
-                character.ResetJump();
+                stateMachine.ChangeState(character.air);
             }
         }
         public override void PhysicsUpdate()
             {
                 base.PhysicsUpdate();
-                character.MovePlayer(horizontalInput, verticalInput,true, character.moveSpeed);
-                character.SpeedControl();
             }
     }
     }
