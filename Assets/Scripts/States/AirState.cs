@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using myStateMachine;
-public class JumpingState : State
+public class AirState : State
 {
     private bool grounded;
-    private float horizontalInput = 0f;
-    private float verticalInput = 0f;
-    public JumpingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
+    public AirState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
     }
     public override void Enter()
     {
         base.Enter();
-        character.Jump();
         grounded = false;
     }
 
@@ -29,14 +26,14 @@ public class JumpingState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        character.verticalInput = Input.GetAxisRaw("Vertical");
+        character.horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.AirMovement(horizontalInput, verticalInput, character.moveSpeed);
+        character.AirMovement(character.horizontalInput, character.verticalInput,character.moveSpeed  * 0.5f);
         character.SpeedControl();
     }
 }
