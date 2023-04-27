@@ -29,8 +29,12 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private GameObject _weaponSway;
 
     [SerializeField] private float _sightOffset;
-    [SerializeField] private float _sightSpeed;
+    [SerializeField] private float _sightTime;
     [SerializeField] private Vector3 _weaponSwayPosition;
+
+    private Recoil _recoilScript;
+
+    //Hidden stats;
     private Vector3 _weaponSwayPositionVelocity;
 
     //Graphics
@@ -44,6 +48,7 @@ public class WeaponController : MonoBehaviour
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
+        _recoilScript = GameObject.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
     }
 
     // Update is called once per frame
@@ -148,7 +153,7 @@ public class WeaponController : MonoBehaviour
         {
             Instantiate(_muzzleFlash, _attackPoint.position, Quaternion.identity);
         }
-
+        _recoilScript.RecoilFire();
         _bulletsLeft--;
         _bulletsShot++;
 
@@ -187,9 +192,14 @@ public class WeaponController : MonoBehaviour
         if(_aiming)
         {
             targetPosition = _fpsCam.transform.position + (transform.position - _sightTarget.transform.position) + (_fpsCam.transform.forward * _sightOffset);
+            _fpsCam.fieldOfView = Mathf.MoveTowards(_fpsCam.fieldOfView, 60f / _zoomRatio, _sightTime * 7 * Time.deltaTime);
+        }
+        else
+        {
+            _fpsCam.fieldOfView = Mathf.MoveTowards(_fpsCam.fieldOfView, 60f, _sightTime * 7 * Time.deltaTime);
         }
         _weaponSwayPosition = _weaponSway.transform.position;
-        _weaponSwayPosition = Vector3.SmoothDamp(_weaponSwayPosition, targetPosition, ref _weaponSwayPositionVelocity, _sightSpeed);
+        _weaponSwayPosition = Vector3.SmoothDamp(_weaponSwayPosition, targetPosition, ref _weaponSwayPositionVelocity, _sightTime);
         _weaponSway.transform.position = _weaponSwayPosition;
     }
 }

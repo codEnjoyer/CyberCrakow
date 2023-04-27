@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Graphics/Grid Inventory.meta
 guid: 45f2971fb2c41d944a0a3e4b52cfcc17
+=======
+guid: ca6b28e762043dc41b80fe6fa8d647df
+>>>>>>> Shooting:Assets/TextMesh Pro.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
