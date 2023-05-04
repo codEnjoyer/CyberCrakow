@@ -27,9 +27,10 @@ using myStateMachine;
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (!character.IsSprintPressed)
+            character.staminaController.Sprinting();
+            if (!character.IsSprintPressed || !character.staminaController.hasRegenerated)
                 character.movementSM.ChangeState(character.standing);
-            if(character.IsJumpPressed)
+            if(character.IsJumpPressed && character.staminaController.playerStamina >=20)
             {
                 character.movementSM.ChangeState(character.jumping);
                 character.ResetJump();

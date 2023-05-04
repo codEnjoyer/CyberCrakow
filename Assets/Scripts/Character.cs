@@ -50,8 +50,10 @@ namespace myStateMachine
         public bool IsSprintPressed { get; set; }
         public float horizontalInput { get; set; }
         public float verticalInput { get; set; }
+        [HideInInspector] public StaminaController staminaController;
         private void Start()
         {
+            staminaController = GetComponent<StaminaController>();
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
             movementSM = new StateMachine();
@@ -156,6 +158,12 @@ namespace myStateMachine
         private Vector3 GetSlopeMoveDirection()
         {
             return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+        }
+        public bool IdleCheck()
+        {
+            if (rb.velocity.magnitude == 0)
+                return true;
+            return false;
         }
     }
 }

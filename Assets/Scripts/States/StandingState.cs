@@ -29,10 +29,10 @@ public class StandingState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (character.IsSprintPressed)
+        if (character.IsSprintPressed && character.staminaController.hasRegenerated)
             stateMachine.ChangeState(character.sprinting);
 
-        if (character.IsJumpPressed && character.readyToJump)
+        if (character.IsJumpPressed && character.readyToJump && character.staminaController.playerStamina >=20)
         {
             stateMachine.ChangeState(character.jumping);
             character.ResetJump();
