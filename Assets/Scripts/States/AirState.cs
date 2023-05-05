@@ -4,14 +4,12 @@ using UnityEngine;
 using myStateMachine;
 public class AirState : State
 {
-    private bool grounded;
     public AirState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
     }
     public override void Enter()
     {
         base.Enter();
-        grounded = false;
     }
 
     public override void LogicUpdate()

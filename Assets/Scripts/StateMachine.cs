@@ -7,7 +7,10 @@ namespace myStateMachine
 public class StateMachine
 {
       public  StandingState standingState;
-      public  JumpingState airState;
+      public  JumpingState junpingState;
+        public SprintingState sprintingState;
+        public AirState airState;
+        public WalkingState walkingState;
       public State CurrentState { get; private set; }
 
         public void Initialize(State startingState)

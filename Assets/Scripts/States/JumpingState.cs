@@ -4,7 +4,6 @@ using UnityEngine;
 using myStateMachine;
 public class JumpingState : State
 {
-    private bool grounded;
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
     public JumpingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
@@ -13,8 +12,7 @@ public class JumpingState : State
     public override void Enter()
     {
         base.Enter();
-        character.Jump();
-        grounded = false;
+        character.staminaController.StaminaJump();
     }
 
     public override void LogicUpdate()

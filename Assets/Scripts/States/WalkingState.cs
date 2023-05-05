@@ -4,15 +4,12 @@ using UnityEngine;
 using myStateMachine;
     public class WalkingState : GroundedState
     {
-        private float horizontalInput;
-        private float verticalInput;
     public WalkingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
         }
         public override void Enter()
         {
             base.Enter();
-            //crouch = false;
 
             character.IsSprintPressed = false;
         }
@@ -20,16 +17,17 @@ using myStateMachine;
         public override void HandleInput()
         {
             base.HandleInput();
+
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (character.IsSprintPressed)
+            if (character.IsSprintPressed && character.staminaController.hasRegenerated)
                 stateMachine.ChangeState(character.sprinting);
             if (character.verticalInput == 0 && character.horizontalInput == 0)
                 stateMachine.ChangeState(character.standing);
-            if (character.IsJumpPressed)
+            if (character.IsJumpPressed && character.staminaController.playerStamina >20)
             {
                 character.movementSM.ChangeState(character.jumping);
                 character.ResetJump();
