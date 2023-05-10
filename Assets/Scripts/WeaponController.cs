@@ -20,7 +20,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private float _zoomRatio;
 
     //bools 
-    private bool _shooting, _readyToShoot, _reloading, _aiming;
+    private bool _shooting, _readyToShoot, _reloading, _aiming, _dropGrenade;
 
     //References
     [SerializeField] private Camera _fpsCam;
@@ -43,19 +43,60 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private bool _allowInvoke = true;
 
+    private WeaponInput _input;
     private void Awake()
     {
+        _input = new WeaponInput();
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
-        _recoilScript = GameObject.Find("CameraRot/CameraRecoil").GetComponent<Recoil>();
+        _recoilScript = GameObject.Find("Camera Holder/RecoilCam").GetComponent<Recoil>();
+    }
+
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _input.Disable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MyInput();
-
+        //MyInput();
+        _shooting = _input.Weapon.Shoot.inProgress;
+        _dropGrenade = _input.Weapon.Grenade.IsPressed();
+        Aiming();
+        if (!_isGrenade)
+        { 
+            if (_shooting)
+            {
+                if (_readyToShoot && !_reloading && _bulletsLeft > 0)
+                {
+                    //set bullets shot to 0
+                    _bulletsShot = 0;
+                    //shoot main
+                    Shoot();
+                }
+            }
+        }   
+        else if(_dropGrenade)
+        {
+            if (_readyToShoot && !_reloading && _bulletsLeft > 0)
+            {
+                   //set bullets shot to 0
+                   _bulletsShot = 0;
+                   //shoot main
+                   Shoot();
+            }
+        }
+        if (_bulletsLeft <= 0 && !_reloading && !_isGrenade)
+        {
+            Reload();
+        }
         if (_ammunitionDisplay != null)
         {
             _ammunitionDisplay.SetText(_bulletsLeft / _bulletsPerTap + "/" + _magazineSize / _bulletsPerTap);
@@ -176,8 +217,11 @@ public class WeaponController : MonoBehaviour
 
     private void Reload()
     {
-        _reloading = true;
-        Invoke("ReloadFinished", _reloadTime);
+        if (!_reloading && _bulletsLeft< _magazineSize) 
+        {
+            _reloading = true;
+            Invoke("ReloadFinished", _reloadTime);
+        }
     }
     private void ReloadFinished()
     {
@@ -187,7 +231,7 @@ public class WeaponController : MonoBehaviour
 
     private void Aiming()
     {
-        _aiming = Input.GetKey(KeyCode.Mouse1);
+        _aiming = _input.Weapon.Aiming.inProgress;
         var targetPosition = transform.position;
         if(_aiming)
         {
