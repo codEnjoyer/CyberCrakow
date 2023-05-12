@@ -23,9 +23,9 @@ using myStateMachine;
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (character.IsSprintPressed && character.staminaController.hasRegenerated)
+            if (character.IsSprintPressed && character.staminaController.hasRegenerated && character.playerInput.y != -1)
                 stateMachine.ChangeState(character.sprinting);
-            if (character.verticalInput == 0 && character.horizontalInput == 0)
+            if (character.playerInput.x == 0 && character.playerInput.y == 0)
                 stateMachine.ChangeState(character.standing);
             if (character.IsJumpPressed && character.staminaController.playerStamina >20)
             {
@@ -36,7 +36,7 @@ using myStateMachine;
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            character.MovePlayer(character.horizontalInput, character.verticalInput, character.moveSpeed);
+            character.MovePlayer(character.moveSpeed);
             character.SpeedControl();
         }
 }
