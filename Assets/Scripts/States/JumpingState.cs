@@ -4,8 +4,6 @@ using UnityEngine;
 using myStateMachine;
 public class JumpingState : State
 {
-    private float horizontalInput = 0f;
-    private float verticalInput = 0f;
     public JumpingState(Character character, StateMachine stateMachine) : base(character, stateMachine)
     {
     }
@@ -27,14 +25,12 @@ public class JumpingState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.AirMovement(horizontalInput, verticalInput, character.moveSpeed);
+        character.AirMovement(character.moveSpeed);
         character.SpeedControl();
     }
 }
