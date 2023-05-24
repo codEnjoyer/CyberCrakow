@@ -23,7 +23,7 @@ using myStateMachine;
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (character.IsSprintPressed && character.staminaController.hasRegenerated && character.playerInput.y != -1)
+            if (character.IsSprintPressed && character.staminaController.hasRegenerated && character.playerInput.y == 1)
                 stateMachine.ChangeState(character.sprinting);
             if (character.playerInput.x == 0 && character.playerInput.y == 0)
                 stateMachine.ChangeState(character.standing);

@@ -28,7 +28,7 @@ using myStateMachine;
         {
             base.LogicUpdate();
             character.staminaController.Sprinting();
-            if (!character.IsSprintPressed || !character.staminaController.hasRegenerated || character.playerInput.y ==-1)
+            if (!character.IsSprintPressed || !character.staminaController.hasRegenerated || character.playerInput.y != 1)
                 character.movementSM.ChangeState(character.standing);
             if(character.IsJumpPressed && character.staminaController.playerStamina >=20)
             {
