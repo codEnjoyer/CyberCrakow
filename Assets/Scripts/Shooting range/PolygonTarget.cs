@@ -1,16 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Shooting_range
 {
-    
     public class PolygonTarget : AbstractTarget
     {
         public override UnityEvent OnHit { get; protected set; }
+        public override UnityEvent OnRecover { get; protected set; }
+        public override UnityEvent OnDeath { get; protected set; }
+        
+        public override int Health { get; protected set; } = 100;
+        public bool IsStanding => Health == 0;
+        
         private Rigidbody _rigidbody;
         private Animator _targetAnimator;
-        [SerializeField] private AudioClip _hitSound;
+        
         private AudioSource _audioSource;
+        [SerializeField] private AudioClip _hitSound;
+        [SerializeField] private AudioClip _deathSound;
+        [SerializeField] private AudioClip _recoverSound;
+
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
@@ -18,37 +29,52 @@ namespace Shooting_range
 
             _targetAnimator = GetComponentInParent<Animator>();
 
-            if (_hitSound is not null)
-                _audioSource = gameObject.AddComponent<AudioSource>();
-            
+            _audioSource = GetComponent<AudioSource>();
+
             OnHit = new UnityEvent();
-            OnHit.AddListener(GetHit);
-            OnHit.AddListener(PlayHitSound);
+            OnDeath = new UnityEvent();
+            OnRecover = new UnityEvent();
         }
 
-        public override void GetHit()
+        private void TakeDamage(int damage = 10)
         {
-            _targetAnimator.Play("TargetHitted");
-            Debug.Log("I got hit!");
+            Health = Math.Clamp(Health - damage, 0, Health);
+            if (Health == 0)
+                Die();
         }
 
-        private void PlayHitSound()
+        private void Die()
         {
-            _audioSource.PlayOneShot(_hitSound);
+            OnDeath?.Invoke();
+            PlayDeathSound();
+            _targetAnimator.Play("TargetDie");
+        }
+
+        public override void GetHit(int damage)
+        {
+            OnHit?.Invoke();
+            TakeDamage(damage);
+            PlayHitSound();
         }
 
         public override void Recover()
         {
+            OnRecover?.Invoke();
+            PlayRecoverSound();
             _targetAnimator.Play("TargetRecover");
-            Debug.Log("I got recover!");
         }
-        
+
+        private void PlayHitSound() => _audioSource.PlayOneShot(_hitSound);
+
+        private void PlayDeathSound() => _audioSource.PlayOneShot(_deathSound);
+
+        private void PlayRecoverSound() => _audioSource.PlayOneShot(_recoverSound);
+
         private void OnCollisionEnter(Collision other)
         {
             // TODO: Прикрутить нормальный bullet
             if (!other.gameObject.TryGetComponent<Bullet>(out var bullet)) return;
-            Debug.Log("Collided");
-            OnHit?.Invoke();
+            GetHit(bullet.Damage);
         }
     }
 }
