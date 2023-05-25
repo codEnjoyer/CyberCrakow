@@ -19,6 +19,14 @@ public class WeaponController : MonoBehaviour
     private int _bulletsLeft, _bulletsShot;
     [SerializeField] private float _zoomRatio;
 
+    [SerializeField] private float _recoilX;
+    [SerializeField] private float _recoilY;
+    [SerializeField] private float _recoilZ;
+
+    [SerializeField] private float _aimRecoilX;
+    [SerializeField] private float _aimRecoilY;
+    [SerializeField] private float _aimRecoilZ;
+
     //bools 
     private bool _shooting, _readyToShoot, _reloading, _aiming, _dropGrenade;
 
@@ -27,12 +35,13 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _sightTarget;
     [SerializeField] private GameObject _weaponSway;
+    [SerializeField] private Transform _recoilCam;
 
     [SerializeField] private float _sightOffset;
     [SerializeField] private float _sightTime;
     [SerializeField] private Vector3 _weaponSwayPosition;
 
-    private Recoil _recoilScript;
+    private CameraMovement _recoilScript;
 
     //Hidden stats;
     private Vector3 _weaponSwayPositionVelocity;
@@ -50,7 +59,8 @@ public class WeaponController : MonoBehaviour
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
-        _recoilScript = GameObject.Find("Camera Holder/RecoilCam").GetComponent<Recoil>();
+        _recoilScript = GameObject.Find("Camera Holder/Main Camera").GetComponent<CameraMovement>();
+        _input.Weapon.Reload.performed += context => Reload();
     }
 
     private void OnEnable()
@@ -99,52 +109,7 @@ public class WeaponController : MonoBehaviour
         }
         if (_ammunitionDisplay != null)
         {
-            _ammunitionDisplay.SetText(_bulletsLeft / _bulletsPerTap + "/" + _magazineSize / _bulletsPerTap);
-        }
-    }
-    private void MyInput()
-    {
-        //check if you allowed to hold down fire button
-        if (!_isGrenade)
-        {
-            if (_allowButtonHold)
-            {
-                _shooting = Input.GetKey(KeyCode.Mouse0);
-            }
-            else
-            {
-                _shooting = Input.GetKeyDown(KeyCode.Mouse0);
-            }
-        }
-        else
-        {
-            if (_allowButtonHold)
-            {
-                _shooting = Input.GetKey(KeyCode.G);
-            }
-            else
-            {
-                _shooting = Input.GetKeyDown(KeyCode.G);
-            }
-        }
-
-        //aiming
-        Aiming();
-        //shooting
-        if (_readyToShoot && _shooting && !_reloading && _bulletsLeft > 0)
-        {
-            //set bullets shot to 0
-            _bulletsShot = 0;
-            //shoot main
-            Shoot();
-        }
-
-        if (!_isGrenade)
-        {
-            if (Input.GetKeyDown(KeyCode.R) && _bulletsLeft < _magazineSize && !_reloading)
-                Reload();
-            if (_readyToShoot && _shooting && !_reloading && _bulletsLeft <= 0)
-                Reload();
+            _ammunitionDisplay.text = ( _bulletsLeft / _bulletsPerTap + "/" + _magazineSize / _bulletsPerTap);
         }
     }
 
@@ -194,7 +159,10 @@ public class WeaponController : MonoBehaviour
         {
             Instantiate(_muzzleFlash, _attackPoint.position, Quaternion.identity);
         }
-        _recoilScript.RecoilFire();
+        if (!_isGrenade)
+        {
+            _recoilScript.RecoilFire(_aiming, _recoilX, _recoilY, _recoilZ, _aimRecoilX, _aimRecoilY, _aimRecoilZ);
+        }
         _bulletsLeft--;
         _bulletsShot++;
 

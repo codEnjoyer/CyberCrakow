@@ -12,7 +12,6 @@ public class BulletController : MonoBehaviour
     //Stats
     [Range(0f,1f)]
     [SerializeField] private float _bounciness;
-    [SerializeField] private bool _useGravity;
 
     //Damage
     [SerializeField] private int _explosionDamage;
@@ -21,10 +20,9 @@ public class BulletController : MonoBehaviour
     //lifetime
     [SerializeField] private int _MaxCollisions;
     [SerializeField] private float _maxLifeTime;
-    private readonly bool _explodeOnTouch = true;
+    [SerializeField] private bool _explodeOnTouch;
 
     private int _collisions;
-    PhysicMaterial _physics_mat;
 
     private void Start()
     {
@@ -90,17 +88,8 @@ public class BulletController : MonoBehaviour
 
     private void Setup()
     {
-        //Create new PhysicMaterial
-        _physics_mat = new PhysicMaterial();
-        _physics_mat.bounciness = _bounciness;
-        _physics_mat.frictionCombine = PhysicMaterialCombine.Minimum;
-        _physics_mat.bounceCombine = PhysicMaterialCombine.Maximum;
-
         //Assign material to coolider
-        GetComponent<SphereCollider>().material = _physics_mat;
-
-        //set gravity
-        _rb.useGravity = _useGravity;
+        GetComponent<SphereCollider>().material.bounciness = _bounciness;
     }
 
     private void OnDrawGizmosSelected()
