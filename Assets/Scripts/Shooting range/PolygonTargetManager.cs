@@ -15,16 +15,16 @@ namespace Shooting_range
         private void Start()
         {
             if (_hitAllTargetsAtStart)
-                StartCoroutine(HitAllTargets());
+                StartCoroutine(DropAllTargets());
         }
 
 
-        private IEnumerator HitAllTargets()
+        private IEnumerator DropAllTargets()
         {
             yield return new WaitForSeconds(_secondsToWaitBeforeHit);
             foreach (var target in _targets)
             {
-                target.GetHit();
+                target.GetHit(target.Health);
                 yield return new WaitForSeconds(_secondsBetweenHits);
             }
             StartCoroutine(RecoverAllTargets());
