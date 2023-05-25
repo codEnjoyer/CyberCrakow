@@ -825,8 +825,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
+      propertyPath: _secondsBetweenHits
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
       propertyPath: _targets.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
+      propertyPath: _hitAllTargetsAtStart
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
       propertyPath: _targets.Array.data[0]
@@ -840,6 +848,18 @@ PrefabInstance:
       propertyPath: _targets.Array.data[2]
       value: 
       objectReference: {fileID: 868372726}
+    - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
+      propertyPath: _secondsBetweenRecovers
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
+      propertyPath: _secondsToWaitBeforeHit
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
+      propertyPath: _secondsToWaitBeforeRecover
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5626747995982412531, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
       propertyPath: m_Name
       value: Target Manager
