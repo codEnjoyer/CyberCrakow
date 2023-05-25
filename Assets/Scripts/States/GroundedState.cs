@@ -28,10 +28,6 @@ namespace myStateMachine
             public override void HandleInput()
             {
                 base.HandleInput();
-                //character.IsSprintPressed = Input.GetKey(character.sprintKey);
-                //character.IsJumpPressed = Input.GetButtonDown("Jump");
-                //character.verticalInput = Input.GetAxisRaw("Vertical");
-                //character.horizontalInput = Input.GetAxisRaw("Horizontal");
                 character.playerInput = character.input.Player.Move.ReadValue<Vector2>();
             }
 

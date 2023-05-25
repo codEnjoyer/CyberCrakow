@@ -21,6 +21,8 @@ public class JumpingState : State
             //Debug.Log("grounded");
             stateMachine.ChangeState(character.standing);
         }
+        else
+            stateMachine.ChangeState(character.air);
     }
     public override void HandleInput()
     {

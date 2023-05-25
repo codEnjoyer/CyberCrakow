@@ -48,6 +48,7 @@ namespace myStateMachine
 
         public bool IsJumpPressed { get; set; }
         public bool IsSprintPressed { get; set; }
+        public bool IsDuckPressed { get; set; }
         public Vector2 playerInput { get; set; }
         [HideInInspector] public StaminaController staminaController;
         public PlayerInput input;
@@ -58,6 +59,12 @@ namespace myStateMachine
 
             input.Player.Jump.performed += Jump_performed;
             input.Player.Sprint.performed += Sprint_performed;
+            input.Player.Slide.performed += Slide_performed;
+        }
+
+        private void Slide_performed(InputAction.CallbackContext obj)
+        {
+            IsDuckPressed = true;
         }
 
         private void Sprint_performed(InputAction.CallbackContext obj)
@@ -99,7 +106,6 @@ namespace myStateMachine
             movementSM.CurrentState.HandleInput();
 
             movementSM.CurrentState.LogicUpdate();
-            
         }
 
         private void FixedUpdate()
@@ -111,7 +117,7 @@ namespace myStateMachine
         {
             //Debug.Log(Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f));
             //return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-            return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+            return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
         }
 
         public void MovePlayer(float moveSpeed)
