@@ -11,6 +11,11 @@ public class AirState : State
     {
         base.Enter();
     }
+    public override void Exit()
+    {
+        base.Exit();
+        character.StopMovement();
+    }
 
     public override void LogicUpdate()
     {
@@ -24,14 +29,13 @@ public class AirState : State
     public override void HandleInput()
     {
         base.HandleInput();
-        character.verticalInput = Input.GetAxisRaw("Vertical");
-        character.horizontalInput = Input.GetAxisRaw("Horizontal");
+        character.playerInput = character.input.Player.Move.ReadValue<Vector2>();
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.AirMovement(character.horizontalInput, character.verticalInput,character.moveSpeed  * 0.5f);
+        character.AirMovement(character.moveSpeed  * 0.5f);
         character.SpeedControl();
     }
 }

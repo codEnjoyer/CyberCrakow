@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace myStateMachine
 {
@@ -47,9 +48,44 @@ namespace myStateMachine
 
         public bool IsJumpPressed { get; set; }
         public bool IsSprintPressed { get; set; }
-        public float horizontalInput { get; set; }
-        public float verticalInput { get; set; }
+        public bool IsDuckPressed { get; set; }
+        public Vector2 playerInput { get; set; }
         [HideInInspector] public StaminaController staminaController;
+        public PlayerInput input;
+
+        private void Awake()
+        {
+            input = new PlayerInput();
+
+            input.Player.Jump.performed += Jump_performed;
+            input.Player.Sprint.performed += Sprint_performed;
+            input.Player.Slide.performed += Slide_performed;
+        }
+
+        private void Slide_performed(InputAction.CallbackContext obj)
+        {
+            IsDuckPressed = true;
+        }
+
+        private void Sprint_performed(InputAction.CallbackContext obj)
+        {
+            IsSprintPressed = true;
+        }
+
+        private void Jump_performed(InputAction.CallbackContext obj)
+        {
+            IsJumpPressed = true;
+        }
+
+        private void OnEnable()
+        {
+            input.Enable();
+        }
+
+        private void OnDisable()
+        {
+            input.Disable();
+        }
         private void Start()
         {
             staminaController = GetComponent<StaminaController>();
@@ -81,12 +117,13 @@ namespace myStateMachine
         {
             //Debug.Log(Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f));
             //return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-            return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+            return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
         }
 
-        public void MovePlayer(float horizontalInput, float verticalInput,float moveSpeed)
+        public void MovePlayer(float moveSpeed)
         {
-            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            //moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
             if (OnSlope() && !exitingSlope)
             {
                 Debug.DrawRay(transform.position, GetSlopeMoveDirection(),Color.green,1f);
@@ -100,7 +137,7 @@ namespace myStateMachine
             }
             rb.useGravity = !OnSlope();            
         }
-        public void AirMovement(float horizontalInput, float verticalInput, float moveSpeed)
+        public void AirMovement( float moveSpeed)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplyer, ForceMode.Force);
             rb.drag = 0;

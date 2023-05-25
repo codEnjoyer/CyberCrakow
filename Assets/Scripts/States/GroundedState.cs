@@ -17,7 +17,6 @@ namespace myStateMachine
             public override void Enter()
             {
                 base.Enter();
-                character.horizontalInput = character.verticalInput = 0.0f;
                 character.IsJumpPressed = false;
             }
 
@@ -29,10 +28,7 @@ namespace myStateMachine
             public override void HandleInput()
             {
                 base.HandleInput();
-                character.IsSprintPressed = Input.GetKey(character.sprintKey);
-                character.IsJumpPressed = Input.GetButtonDown("Jump");
-                character.verticalInput = Input.GetAxisRaw("Vertical");
-                character.horizontalInput = Input.GetAxisRaw("Horizontal");
+                character.playerInput = character.input.Player.Move.ReadValue<Vector2>();
             }
 
         public override void LogicUpdate()

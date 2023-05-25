@@ -29,7 +29,7 @@ public class StandingState : GroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (character.IsSprintPressed && character.staminaController.hasRegenerated)
+        if (character.IsSprintPressed && character.staminaController.hasRegenerated && character.playerInput.y == 1)
             stateMachine.ChangeState(character.sprinting);
 
         if (character.IsJumpPressed && character.readyToJump && character.staminaController.playerStamina >=20)
@@ -37,7 +37,7 @@ public class StandingState : GroundedState
             stateMachine.ChangeState(character.jumping);
             character.ResetJump();
         }
-        if(character.verticalInput != 0 || character.horizontalInput != 0 && !character.IsSprintPressed)
+        if(character.playerInput.x != 0 || character.playerInput.y != 0 && !character.IsSprintPressed)
         {
             stateMachine.ChangeState(character.walking);
         }
@@ -45,6 +45,6 @@ public class StandingState : GroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        character.MovePlayer(character.horizontalInput, character.verticalInput, character.moveSpeed);
+        character.MovePlayer(character.moveSpeed);
     }
 }
