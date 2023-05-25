@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5271774115202270400}
   - component: {fileID: 5271774115202270403}
   - component: {fileID: 4567668192153706958}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5271774115202270402}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 10c3560bfbec2dc40bf3844f508c752f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -110,7 +110,7 @@ Rigidbody:
   m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
@@ -138,3 +138,4 @@ MonoBehaviour:
   _explosionRange: 0
   _MaxCollisions: 0
   _maxLifeTime: 2
+  _explodeOnTouch: 1
