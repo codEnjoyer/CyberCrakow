@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 5271774115202270403}
   - component: {fileID: 4567668192153706958}
   - component: {fileID: 6652278546280705072}
+  - component: {fileID: 8076354809896931508}
   m_Layer: 6
-  m_Name: Bullet
+  m_Name: Bullet 1
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +97,7 @@ SphereCollider:
   m_GameObject: {fileID: 5271774115202270402}
   m_Material: {fileID: 13400000, guid: 10c3560bfbec2dc40bf3844f508c752f, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 5271774115202270403}
-  _explosion: {fileID: 0}
+  _explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   _whatIsEnemies:
     serializedVersion: 2
     m_Bits: 8
@@ -151,3 +152,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3d236937b344e0be1084f91b6df0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &8076354809896931508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271774115202270402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.4313555, z: 2.323174}
+  m_Center: {x: 0, y: 0.012947191, z: -0.69882363}

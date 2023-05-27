@@ -26,7 +26,9 @@ public class NPCMovement : MonoBehaviour
         if (agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
+
         }
+        agent.Warp(wayPoints[1].position);
     }
 
     // Update is called once per frame
@@ -57,6 +59,8 @@ public class NPCMovement : MonoBehaviour
         {
             agent.destination = wayPoints[currentWayPoint].position;
         }
+        if (HasReached())
+            Debug.Log("reach");
         if (HasReached())
         {
             currentWayPoint = (currentWayPoint + 1) % wayPoints.Length;
@@ -108,6 +112,9 @@ public class NPCMovement : MonoBehaviour
         }
         private bool HasReached()
         {
+            //Debug.Log(agent.hasPath);
+            //Debug.Log(!agent.pathPending);
+            //Debug.Log(agent.remainingDistance <= agent.stoppingDistance);
             return (agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
         }
         private void CheckForPlayer()
@@ -117,6 +124,7 @@ public class NPCMovement : MonoBehaviour
             if (Physics.Raycast(transform.position, directionToPlayer.normalized, out hitInfo))
             {
                 inSight = hitInfo.transform.CompareTag("Player");
+                Debug.DrawRay(transform.position, directionToPlayer.normalized);
                 //if(inSight)
                 //Debug.Log("player sighted");
             }

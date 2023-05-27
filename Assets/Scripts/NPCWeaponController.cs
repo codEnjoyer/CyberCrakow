@@ -9,17 +9,13 @@ namespace NPCAI
     {
         [SerializeField] private GameObject _bullet;
 
-        //if grenade
-        [SerializeField] private bool _isGrenade;
         //bullet force
         [SerializeField] private float _shootForce, _upwardForce;
 
         //Gun stats
         [SerializeField] private float _timeBetweenShooting, _spread, _reloadTime, _timeBetweenShots;
         [SerializeField] private int _magazineSize, _bulletsPerTap;
-        [SerializeField] private bool _allowButtonHold;
         private int _bulletsLeft, _bulletsShot;
-        [SerializeField] private float _zoomRatio;
 
         //bools 
         private bool _shooting, _readyToShoot, _reloading, _aiming, _dropGrenade;
@@ -27,21 +23,11 @@ namespace NPCAI
         //References
         [SerializeField] private GameObject _fpsCam;
         [SerializeField] private Transform _attackPoint;
-        [SerializeField] private GameObject _weaponSway;
         [SerializeField] private Transform playerPosition;
 
-        [SerializeField] private float _sightOffset;
-        [SerializeField] private float _sightTime;
-        [SerializeField] private Vector3 _weaponSwayPosition;
-
-        private Recoil _recoilScript;
-
-        //Hidden stats;
-        private Vector3 _weaponSwayPositionVelocity;
 
         //Graphics
         [SerializeField] private GameObject _muzzleFlash;
-        [SerializeField] private TextMeshProUGUI _ammunitionDisplay;
 
         [SerializeField] private bool _allowInvoke = true;
 
@@ -55,7 +41,6 @@ namespace NPCAI
             //make sure magazine is full
             _bulletsLeft = _magazineSize;
             _readyToShoot = true;
-            _recoilScript = GameObject.Find("Camera Holder/RecoilCam").GetComponent<Recoil>();
         }
 
         private void OnEnable()
@@ -73,8 +58,7 @@ namespace NPCAI
         {
             //MyInput();
             _shooting = inSight;
-            if (!_isGrenade)
-            {
+          
                 if (_shooting)
                 {
                     if (_readyToShoot && !_reloading && _bulletsLeft > 0)
@@ -85,24 +69,10 @@ namespace NPCAI
                         
                     }
                 }
-            }
-            else if (_dropGrenade)
-            {
-                if (_readyToShoot && !_reloading && _bulletsLeft > 0)
-                {
-                    //set bullets shot to 0
-                    _bulletsShot = 0;
-                    //shoot main
-                    
-                }
-            }
-            if (_bulletsLeft <= 0 && !_reloading && !_isGrenade)
+
+            if (_bulletsLeft <= 0 && !_reloading)
             {
                 Reload();
-            }
-            if (_ammunitionDisplay != null)
-            {
-                _ammunitionDisplay.SetText(_bulletsLeft / _bulletsPerTap + "/" + _magazineSize / _bulletsPerTap);
             }
         }
 
@@ -155,7 +125,6 @@ namespace NPCAI
                 {
                     Instantiate(_muzzleFlash, _attackPoint.position, Quaternion.identity);
                 }
-                _recoilScript.RecoilFire();
                 _bulletsLeft--;
                 _bulletsShot++;
 

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1991121221135586799}
-  - component: {fileID: 1991121221135586798}
   m_Layer: 0
   m_Name: RecoilCam
   m_TagString: Untagged
@@ -28,28 +27,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1991121221752517085}
+  m_Children: []
   m_Father: {fileID: 1991121222947506500}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1991121221135586798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991121221135586796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f26e05995d3c04eb13540ac5e69fd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _recoilX: 0
-  _recoilY: 0
-  _recoilZ: 0
-  _snappiness: 0
-  _returnSpeed: 0
 --- !u!1 &1991121221183529506
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,10 +154,17 @@ MonoBehaviour:
   _bulletsPerTap: 1
   _allowButtonHold: 1
   _zoomRatio: 2
+  _recoilX: 0
+  _recoilY: 0
+  _recoilZ: 0
+  _aimRecoilX: 0
+  _aimRecoilY: 0
+  _aimRecoilZ: 0
   _fpsCam: {fileID: 1991121221752517082}
   _attackPoint: {fileID: 1991121222365823598}
   _sightTarget: {fileID: 1991121222738516876}
   _weaponSway: {fileID: 1991121222355023865}
+  _recoilCam: {fileID: 0}
   _sightOffset: 0.3
   _sightTime: 2
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
@@ -271,10 +259,17 @@ MonoBehaviour:
   _bulletsPerTap: 1
   _allowButtonHold: 0
   _zoomRatio: 0
+  _recoilX: 0
+  _recoilY: 0
+  _recoilZ: 0
+  _aimRecoilX: 0
+  _aimRecoilY: 0
+  _aimRecoilZ: 0
   _fpsCam: {fileID: 1991121221752517082}
   _attackPoint: {fileID: 1991121221803190946}
   _sightTarget: {fileID: 1991121221803190946}
   _weaponSway: {fileID: 1991121221803190947}
+  _recoilCam: {fileID: 0}
   _sightOffset: 0
   _sightTime: 0
   _weaponSwayPosition: {x: 0, y: 0, z: 0}
@@ -308,13 +303,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991121221752517080}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: -0.01}
+  m_LocalPosition: {x: 0, y: 0.54999995, z: -0.010009766}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1991121221183529509}
   - {fileID: 1991121221512489402}
-  m_Father: {fileID: 1991121221135586799}
+  m_Father: {fileID: 1991121222947506500}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1991121221752517082
@@ -377,11 +372,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991121221752517080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eff3d20816750b448279f0d55269f15, type: 3}
+  m_Script: {fileID: 11500000, guid: 42cc344e20cd6eb4998ba37d1c6578f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 1000
-  sensY: 1000
+  sensX: 400
+  sensY: 400
+  _snappiness: 1
+  _returnSpeed: 1
   orientation: {fileID: 1991121221377277224}
 --- !u!1 &1991121221776423150
 GameObject:
@@ -911,6 +908,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1991121221752517085}
   - {fileID: 1991121221135586799}
   m_Father: {fileID: 1991121222415564378}
   m_RootOrder: 3

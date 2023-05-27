@@ -12,7 +12,7 @@ namespace Shooting_range
         public override UnityEvent OnDeath { get; protected set; }
         
         public override int Health { get; protected set; } = 100;
-        public bool IsStanding => Health == 0;
+        public bool IsStanding = true;
         
         private Rigidbody _rigidbody;
         private Animator _targetAnimator;
@@ -28,6 +28,8 @@ namespace Shooting_range
             _rigidbody.isKinematic = true;
 
             _targetAnimator = GetComponentInParent<Animator>();
+            if (_targetAnimator != null)
+                Debug.Log("anim");
 
             _audioSource = GetComponent<AudioSource>();
 
@@ -38,8 +40,9 @@ namespace Shooting_range
 
         private void TakeDamage(int damage = 10)
         {
-            Health = Math.Clamp(Health - damage, 0, Health);
-            if (Health == 0)
+            //Health -= damage;
+            //if (Health == 0)
+
                 Die();
         }
 
@@ -47,6 +50,7 @@ namespace Shooting_range
         {
             OnDeath?.Invoke();
             PlayDeathSound();
+            IsStanding = false;
             _targetAnimator.Play("TargetDie");
         }
 
@@ -61,6 +65,7 @@ namespace Shooting_range
         {
             OnRecover?.Invoke();
             PlayRecoverSound();
+            IsStanding = true;
             _targetAnimator.Play("TargetRecover");
         }
 
@@ -73,7 +78,10 @@ namespace Shooting_range
         private void OnCollisionEnter(Collision other)
         {
             // TODO: Прикрутить нормальный bullet
+            Debug.Log("hit");
             if (!other.gameObject.TryGetComponent<Bullet>(out var bullet)) return;
+
+            Debug.Log(Health);
             GetHit(bullet.Damage);
         }
     }

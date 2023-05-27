@@ -18,7 +18,10 @@ namespace Shooting_range
                 StartCoroutine(DropAllTargets());
         }
 
-
+        private void Update()
+        {
+            
+        }
         private IEnumerator DropAllTargets()
         {
             yield return new WaitForSeconds(_secondsToWaitBeforeHit);

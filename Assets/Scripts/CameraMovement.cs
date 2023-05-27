@@ -27,7 +27,6 @@ public class CameraMovement : MonoBehaviour
         var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-
         _yRotation += mouseX;
 
         _xRotation -= mouseY;
