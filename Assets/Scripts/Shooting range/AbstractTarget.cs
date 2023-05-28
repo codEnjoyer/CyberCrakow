@@ -13,6 +13,7 @@ namespace Shooting_range
         public abstract UnityEvent OnRecover { get; protected set; }
         public abstract UnityEvent OnDeath { get; protected set; }
         public abstract int Health { get; protected set; }
+        public abstract int MaxHealth { get; protected set; }
 
         public virtual void GetHit(int damage)
         {
