@@ -26,7 +26,6 @@ public class NPCMovement : MonoBehaviour
         if (agent == null)
         {
             agent = GetComponent<NavMeshAgent>();
-
         }
         agent.Warp(wayPoints[1].position);
     }
@@ -59,8 +58,6 @@ public class NPCMovement : MonoBehaviour
         {
             agent.destination = wayPoints[currentWayPoint].position;
         }
-        if (HasReached())
-            Debug.Log("reach");
         if (HasReached())
         {
             currentWayPoint = (currentWayPoint + 1) % wayPoints.Length;
