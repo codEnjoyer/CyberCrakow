@@ -52,15 +52,15 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private bool _allowInvoke = true;
 
-    private WeaponInput _input;
+    private PlayerInput _input;
     private void Awake()
     {
-        _input = new WeaponInput();
+        _input = new PlayerInput();
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
         _recoilScript = GameObject.Find("Camera Holder/Main Camera").GetComponent<CameraMovement>();
-        _input.Weapon.Reload.performed += context => Reload();
+        _input.Player.Reload.performed += context => Reload();
     }
 
     private void OnEnable()
@@ -77,8 +77,10 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         //MyInput();
-        _shooting = _input.Weapon.Shoot.inProgress;
-        _dropGrenade = _input.Weapon.Grenade.IsPressed();
+        _shooting = _input.Player.Shoot.inProgress;
+        _dropGrenade = _input.Player.Grenade.IsPressed();
+        if(_dropGrenade)
+            Debug.Log(_dropGrenade);
         Aiming();
         if (!_isGrenade)
         { 
@@ -199,7 +201,7 @@ public class WeaponController : MonoBehaviour
 
     private void Aiming()
     {
-        _aiming = _input.Weapon.Aiming.inProgress;
+        _aiming = _input.Player.Aim.inProgress;
         var targetPosition = transform.position;
         if(_aiming)
         {
