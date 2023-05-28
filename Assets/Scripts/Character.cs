@@ -142,6 +142,10 @@ namespace myStateMachine
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplyer, ForceMode.Force);
             rb.drag = 0;
             rb.useGravity = true;
+            if (OnSlope()&& !exitingSlope)
+            {
+                rb.AddForce(-transform.up * 1, ForceMode.Impulse);
+            }
         }
         public void SpeedControl()
         {

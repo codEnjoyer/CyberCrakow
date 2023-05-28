@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be49581123844707855051e3556a245d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsStanding: 1
   _hitSound: {fileID: 0}
   _deathSound: {fileID: 0}
   _recoverSound: {fileID: 0}
@@ -130,7 +131,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!82 &5084120637147076425
 AudioSource:
   m_ObjectHideFlags: 0

@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9ae405dd4ff269c45820c589d578b71f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -97,7 +97,7 @@ SphereCollider:
   m_GameObject: {fileID: 5271774115202270402}
   m_Material: {fileID: 13400000, guid: 10c3560bfbec2dc40bf3844f508c752f, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
@@ -161,7 +161,7 @@ BoxCollider:
   m_GameObject: {fileID: 5271774115202270402}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 0.4313555, z: 2.323174}
   m_Center: {x: 0, y: 0.012947191, z: -0.69882363}

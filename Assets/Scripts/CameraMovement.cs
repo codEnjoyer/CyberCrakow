@@ -27,15 +27,31 @@ public class CameraMovement : MonoBehaviour
         var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
+
         _yRotation += mouseX;
 
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
 
-        _targetRotation = Vector3.Lerp(_targetRotation, new Vector3(_xRotation,_yRotation,0), _returnSpeed * Time.deltaTime);
-        _currentRotation = Vector3.Slerp(_currentRotation, _targetRotation, _snappiness * Time.fixedDeltaTime);
-        transform.localRotation = Quaternion.Euler(_currentRotation);
+        transform.rotation = Quaternion.Euler(_xRotation, _yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, _yRotation, 0);
+
     }
+
+    //private void Update()
+    //{
+    //    var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+    //    var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+
+    //    _yRotation += mouseX;
+
+    //    _xRotation -= mouseY;
+    //    _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
+
+    //    _targetRotation = Vector3.Lerp(_targetRotation, new Vector3(_xRotation,_yRotation,0), _returnSpeed * Time.deltaTime);
+    //    _currentRotation = Vector3.Slerp(_currentRotation, _targetRotation, _snappiness * Time.fixedDeltaTime);
+    //    transform.localRotation = Quaternion.Euler(_currentRotation);
+    //}
     public void RecoilFire(bool _isAiming,float _recoilX, float _recoilY, float _recoilZ, float _aimRecoilX, float _aimRecoilY, float _aimRecoilZ)
     {
         if (_isAiming)
