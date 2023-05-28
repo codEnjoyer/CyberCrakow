@@ -26,8 +26,6 @@ namespace Shooting_range
         private void Start()
         {
             _targetAnimator = GetComponentInParent<Animator>();
-            if (_targetAnimator != null)
-                Debug.Log("anim");
 
             _audioSource = GetComponent<AudioSource>();
 
@@ -49,7 +47,6 @@ namespace Shooting_range
         {
             OnDeath?.Invoke();
             PlayDeathSound();
-            IsStanding = false;
             _targetAnimator.Play("TargetDie");
             StartCoroutine(RecoverAfterDie());
         }
@@ -65,7 +62,6 @@ namespace Shooting_range
         {
             OnRecover?.Invoke();
             PlayRecoverSound();
-            IsStanding = true;
             _targetAnimator.Play("TargetRecover");
             Health = MaxHealth;
         }
