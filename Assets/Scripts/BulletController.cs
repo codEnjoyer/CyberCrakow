@@ -60,7 +60,8 @@ public class BulletController : MonoBehaviour
         }
 
         //add Delay, to debug
-        Invoke("Delay", 0.05f);
+        //Invoke("Delay", 0.05f);
+        Destroy(gameObject);
     }
 
     private void Delay()

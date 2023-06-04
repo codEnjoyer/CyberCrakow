@@ -7,7 +7,8 @@ namespace Shooting_range
 
     public class Bullet : MonoBehaviour
     {
-        public int Damage { get; private set; }
+        [SerializeField]
+        public int Damage;
         // и тд
     }
 }

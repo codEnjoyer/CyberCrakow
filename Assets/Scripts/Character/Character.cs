@@ -51,6 +51,7 @@ namespace myStateMachine
         public bool IsDuckPressed { get; set; }
         public Vector2 playerInput { get; set; }
         [HideInInspector] public StaminaController staminaController;
+        [HideInInspector] public HealthController healthController;
         public PlayerInput input;
 
         private void Awake()
@@ -89,6 +90,7 @@ namespace myStateMachine
         private void Start()
         {
             staminaController = GetComponent<StaminaController>();
+            healthController = GetComponent<HealthController>();
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
             movementSM = new StateMachine();

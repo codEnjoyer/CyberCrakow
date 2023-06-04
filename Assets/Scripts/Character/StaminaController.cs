@@ -29,8 +29,8 @@ public class StaminaController : MonoBehaviour
     }
     private void Update()
     {
-        if(!(character.movementSM.CurrentState == character.sprinting))
-            if(playerStamina<=maxStamina - 0.001)
+        if(character.movementSM.CurrentState != character.sprinting || character.movementSM.CurrentState != character.air)
+            if(playerStamina<=maxStamina - 0.001 )
             {
                 if(!character.IdleCheck())
                     playerStamina += staminaRegen * Time.deltaTime;
@@ -38,14 +38,12 @@ public class StaminaController : MonoBehaviour
                     playerStamina += staminaRegen * Time.deltaTime * 2;
 
                 UpdateStamina(1);
-
             }
         if (playerStamina >= maxStamina)
         {
             sliderCanvasGroup.alpha = 0;
             hasRegenerated = true;
         }
-
     }
 
     public void Sprinting()

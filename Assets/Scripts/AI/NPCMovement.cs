@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using  NPCAI;
+using Shooting_range;
 
 public class NPCMovement : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class NPCMovement : MonoBehaviour
         {
             agent = GetComponent<NavMeshAgent>();
         }
-        agent.Warp(wayPoints[1].position);
+        //agent.Warp(wayPoints[0].position);
     }
 
     // Update is called once per frame
@@ -36,7 +37,10 @@ public class NPCMovement : MonoBehaviour
         UpdateStates();
         CheckForPlayer();
     }
-
+    private void OnEnable()
+    {
+        agent.SetDestination(wayPoints[currentWayPoint + 1].position);
+    }
     private void UpdateStates()
     {
         switch (currentState)
@@ -109,10 +113,11 @@ public class NPCMovement : MonoBehaviour
         }
         private bool HasReached()
         {
-            //Debug.Log(agent.hasPath);
-            //Debug.Log(!agent.pathPending);
-            //Debug.Log(agent.remainingDistance <= agent.stoppingDistance);
-            return (agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
+        //Debug.Log(agent.hasPath);
+        //Debug.Log(!agent.pathPending);
+        //Debug.Log(agent.remainingDistance <= agent.stoppingDistance);
+        Debug.Log(agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
+        return (agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
         }
         private void CheckForPlayer()
         {
@@ -126,5 +131,6 @@ public class NPCMovement : MonoBehaviour
                 //Debug.Log("player sighted");
             }
         }
+
 }
 
