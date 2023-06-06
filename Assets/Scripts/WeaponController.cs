@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class WeaponController : MonoBehaviour
 {
@@ -34,17 +35,15 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private Camera _fpsCam;
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private Transform _sightTarget;
-    [SerializeField] private GameObject _weaponSway;
     [SerializeField] private Transform _recoilCam;
+    [SerializeField] private Transform _standartPosition;
+    [SerializeField] private Transform _aimingPosition;
 
-    [SerializeField] private float _sightOffset;
     [SerializeField] private float _sightTime;
-    [SerializeField] private Vector3 _weaponSwayPosition;
 
     private CameraMovement _recoilScript;
 
     //Hidden stats;
-    private Vector3 _weaponSwayPositionVelocity;
 
     //Graphics
     [SerializeField] private GameObject _muzzleFlash;
@@ -202,18 +201,17 @@ public class WeaponController : MonoBehaviour
     private void Aiming()
     {
         _aiming = _input.Player.Aim.inProgress;
-        var targetPosition = transform.position;
-        if(_aiming)
+        if (_aiming)
         {
-            targetPosition = _fpsCam.transform.position + (transform.position - _sightTarget.transform.position) + (_fpsCam.transform.forward * _sightOffset);
+            transform.position = Vector3.Lerp(transform.position, _aimingPosition.position + (transform.position - _sightTarget.position), _sightTime * Time.deltaTime);
+            Debug.Log("Aiming Position " + _aimingPosition.position);
+            Debug.Log("Gun Position " + transform.position);
             _fpsCam.fieldOfView = Mathf.MoveTowards(_fpsCam.fieldOfView, 60f / _zoomRatio, _sightTime * 7 * Time.deltaTime);
         }
         else
         {
+            transform.position = Vector3.Lerp(transform.position, _standartPosition.position, _sightTime * Time.deltaTime);
             _fpsCam.fieldOfView = Mathf.MoveTowards(_fpsCam.fieldOfView, 60f, _sightTime * 7 * Time.deltaTime);
         }
-        _weaponSwayPosition = _weaponSway.transform.position;
-        _weaponSwayPosition = Vector3.SmoothDamp(_weaponSwayPosition, targetPosition, ref _weaponSwayPositionVelocity, _sightTime);
-        _weaponSway.transform.position = _weaponSwayPosition;
     }
 }
