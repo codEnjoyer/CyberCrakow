@@ -22,7 +22,11 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float _maxLifeTime;
     [SerializeField] private bool _explodeOnTouch;
 
+    //Sounds
+    [SerializeField] private AudioSource _explosionSound;
+
     private int _collisions;
+    private bool _exploaded = false;
 
     private void Start()
     {
@@ -31,22 +35,26 @@ public class BulletController : MonoBehaviour
 
     private void Update()
     {
-       //When to explode:
-       if(_collisions>_MaxCollisions)
-       {
-            Explode();
-       }
+        if (!_exploaded)
+        {
+            //When to explode:
+            if (_collisions > _MaxCollisions)
+            {
+                Explode();
+            }
 
-       //Count down lifetime
-       _maxLifeTime -= Time.deltaTime;
-       if(_maxLifeTime < 0f )
-       {
-            Explode();
-       }
+            //Count down lifetime
+            _maxLifeTime -= Time.deltaTime;
+            if (_maxLifeTime < 0f)
+            {
+                Explode();
+            }
+        }
     }
 
     private void Explode()
     {
+        _exploaded = true;
         //Instantiate explosion
         if(_explosion!=null)
         {
@@ -58,10 +66,23 @@ public class BulletController : MonoBehaviour
         {
 
         }
+<<<<<<< HEAD:Assets/Scripts/BulletController.cs
 
         //add Delay, to debug
         //Invoke("Delay", 0.05f);
         Destroy(gameObject);
+=======
+        if (_explosionSound != null)
+        {
+            _explosionSound.Play();
+            Invoke("Delay", _explosionSound.clip.length);
+        }
+        else
+        {
+            //add Delay, to debug
+            Invoke("Delay", 0.05f);
+        }
+>>>>>>> shooting_sounds:Assets/Scripts/Shooting/BulletController.cs
     }
 
     private void Delay()
