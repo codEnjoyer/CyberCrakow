@@ -857,6 +857,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5084120637147076425, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e1f4ac556d82d36479cb3735b9f6d9df, type: 3}
     - target: {fileID: 8063822742593668174, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
       propertyPath: m_RootOrder
       value: 0
