@@ -17,7 +17,8 @@ namespace Spawner
             tank.target = playerPosition;
             tank.wayPoints = waypoints;
             //tank.agent.destination = waypoints[0].position;
-            //health.spawner = this;
+            health = tank.GetComponent<NPCHealth>();
+            health.spawner = this;
             tank.currentState = NPCMovement.States.Patrol;
             Instantiate(tankPrefab, transform.position, Quaternion.identity);
         }

@@ -116,7 +116,7 @@ public class NPCMovement : MonoBehaviour
         //Debug.Log(agent.hasPath);
         //Debug.Log(!agent.pathPending);
         //Debug.Log(agent.remainingDistance <= agent.stoppingDistance);
-        Debug.Log(agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
+        //Debug.Log(agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
         return (agent.hasPath && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
         }
         private void CheckForPlayer()

@@ -12,6 +12,7 @@ namespace myStateMachine
         public JumpingState jumping;
         public WalkingState walking;
         public StateMachine movementSM;
+        public SlidingState slide;
         public AirState air;
         [Header("Movement")]
         public float walkingSpeed;
@@ -23,6 +24,9 @@ namespace myStateMachine
         public float jumpCooldown;
         public float airMultiplyer;
         public bool readyToJump = true;
+        public float startYScale;
+        public float slideYScale;
+        public float slideForce = 5f;
 
         [Header("Keybinds")]
         public KeyCode jumpKey = KeyCode.Space;
@@ -53,6 +57,7 @@ namespace myStateMachine
         [HideInInspector] public StaminaController staminaController;
         [HideInInspector] public HealthController healthController;
         public PlayerInput input;
+        [SerializeField] Camera fpsCam; 
 
         private void Awake()
         {
@@ -60,13 +65,8 @@ namespace myStateMachine
 
             input.Player.Jump.performed += Jump_performed;
             input.Player.Sprint.performed += Sprint_performed;
-            input.Player.Slide.performed += Slide_performed;
         }
 
-        private void Slide_performed(InputAction.CallbackContext obj)
-        {
-            IsDuckPressed = true;
-        }
 
         private void Sprint_performed(InputAction.CallbackContext obj)
         {
@@ -101,13 +101,16 @@ namespace myStateMachine
             sprinting = new SprintingState(this, movementSM);
             walking = new WalkingState(this, movementSM);
             air = new AirState(this, movementSM);
+            slide = new SlidingState(this, movementSM);
             movementSM.Initialize(standing);
+            startYScale = transform.localScale.y;
         }
         private void Update()
         {
             movementSM.CurrentState.HandleInput();
 
             movementSM.CurrentState.LogicUpdate();
+
         }
 
         private void FixedUpdate()
@@ -128,8 +131,9 @@ namespace myStateMachine
             moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
             if (OnSlope() && !exitingSlope)
             {
+                moveDirection = GetSlopeMoveDirection();
                 Debug.DrawRay(transform.position, GetSlopeMoveDirection(),Color.green,1f);
-                rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+                rb.AddForce(moveDirection * moveSpeed * 20f, ForceMode.Force);
                 rb.drag = groundDrag + 6;
             }
             if (!OnSlope())
@@ -206,6 +210,21 @@ namespace myStateMachine
             if (rb.velocity.magnitude == 0)
                 return true;
             return false;
+        }
+
+        public void StartSlide()
+        {
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+            if (OnSlope())
+                rb.drag -= 7;
+            rb.AddForce(moveDirection.normalized * slideForce*4f, ForceMode.Impulse);
+        }
+        public void SlideMovement()
+        {
+            rb.AddForce(moveDirection.normalized * slideForce, ForceMode.Force);
+            rb.AddForce(Vector3.down * 4f, ForceMode.Impulse);
+            if (rb.velocity.magnitude <= 2f)
+                movementSM.ChangeState(walking);
         }
     }
 }

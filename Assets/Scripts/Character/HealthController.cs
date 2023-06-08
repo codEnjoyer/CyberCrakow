@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using myStateMachine;
 using Shooting_range;
+using UnityEngine.SceneManagement;
 
 public class HealthController : MonoBehaviour
 {
@@ -75,6 +76,8 @@ public class HealthController : MonoBehaviour
     void Die()
     {
         Debug.Log("Death");
+
+        SceneManager.LoadScene(0);
     }
 
     void UpdateHealth(int value)
