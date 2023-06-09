@@ -1,21 +1,24 @@
 ﻿using myStateMachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Environment.Location_exiting
 {
     [RequireComponent(typeof(Renderer))]
     [RequireComponent(typeof(BoxCollider))]
+    [RequireComponent(typeof(ExitTimer))]
     public class ExitZone : MonoBehaviour
     {
         private BoxCollider _exitZone;
-        private float _timeInsideExitZone;
-        [FormerlySerializedAs("_debug")] [SerializeField] private bool _debugMode;
-        [SerializeField] private float _requiredTimeInsideExitZone;
+        private ExitTimer _exitTimer;
+        [SerializeField] private bool _debugMode;
+
         public void Start()
         {
             _exitZone = GetComponent<BoxCollider>();
+            _exitTimer = GetComponent<ExitTimer>();
+
+            InitializeListenersOnExiting();
             InitializeExitZone();
             DisableMeshInRuntime();
         }
@@ -31,29 +34,22 @@ namespace Environment.Location_exiting
                 _exitZone.isTrigger = true;
         }
 
+        private void InitializeListenersOnExiting()
+        {
+            _exitTimer.OnTimeElapsed.AddListener(LeaveLocation);
+        }
+
         private void LeaveLocation()
         {
             const int mainMenuBuildIndex = 0;
             SceneManager.LoadScene(mainMenuBuildIndex);
         }
 
-        private void IncreaseTimeInsideExitZone()
-        {
-            _timeInsideExitZone += Time.fixedDeltaTime;
-            if (!_debugMode) return;
-            Debug.Log($"Находится в зоне выхода в течение {_timeInsideExitZone} секунд");
-        }
-
-        private void CheckForLeaving()
-        {
-            if (_timeInsideExitZone >= _requiredTimeInsideExitZone)
-                LeaveLocation();
-        }
 
         public void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<Character>(out var player)) return;
-            _timeInsideExitZone = 0f;
+            _exitTimer.Restart();
             if (!_debugMode) return;
             Debug.Log("Вошёл в зону выхода");
         }
@@ -61,10 +57,9 @@ namespace Environment.Location_exiting
         public void OnTriggerStay(Collider other)
         {
             if (!other.TryGetComponent<Character>(out var player)) return;
+            _exitTimer.IncreaseTime(Time.fixedDeltaTime);
             if (!_debugMode) return;
             Debug.Log("Находится в зоне выхода");
-            IncreaseTimeInsideExitZone();
-            CheckForLeaving();
         }
 
         public void OnTriggerExit(Collider other)

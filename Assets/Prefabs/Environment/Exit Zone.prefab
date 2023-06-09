@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7502780387553832899}
   - component: {fileID: 3946547798855810936}
   - component: {fileID: 7631496477009024510}
+  - component: {fileID: 3529950563872003769}
   m_Layer: 0
   m_Name: Exit Zone
   m_TagString: Untagged
@@ -110,4 +111,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3796f4b28df84744b8dc9cab07fad768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _debugMode: 0
+--- !u!114 &3529950563872003769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5384286275763885042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc6a40bceffa49f09243bd5f877fd60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _debugMode: 0
   _requiredTimeInsideExitZone: 3
