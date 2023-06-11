@@ -19,10 +19,16 @@ namespace Environment.Location_exiting
             OnTimeElapsed = new UnityEvent();
         }
 
-        public void Restart() => _timeInsideExitZone = 0f;
+        public void Restart()
+        {
+            _timerText.enabled = false;
+            _timeInsideExitZone = 0f;
+        }
 
         public void IncreaseTime(float time)
         {
+            if (!_timerText.enabled)
+                _timerText.enabled = true;
             _timeInsideExitZone += time;
             var remainingTime = Mathf.Max(0f, _requiredTimeInsideExitZone - _timeInsideExitZone);
             // Mathf.Max() используется для того, чтобы при последнем тике не отображалось отрицательное значение

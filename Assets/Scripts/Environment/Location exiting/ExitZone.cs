@@ -49,7 +49,6 @@ namespace Environment.Location_exiting
         public void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<Character>(out var player)) return;
-            _exitTimer.Restart();
             if (!_debugMode) return;
             Debug.Log("Вошёл в зону выхода");
         }
@@ -65,6 +64,7 @@ namespace Environment.Location_exiting
         public void OnTriggerExit(Collider other)
         {
             if (!other.TryGetComponent<Character>(out var player)) return;
+            _exitTimer.Restart();
             if (!_debugMode) return;
             Debug.Log("Вышёл из зоны выхода");
         }
