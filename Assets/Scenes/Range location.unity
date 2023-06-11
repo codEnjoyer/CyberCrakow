@@ -846,6 +846,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 51392427}
     m_Modifications:
     - target: {fileID: 662476628460519703, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
+      propertyPath: _deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e1f4ac556d82d36479cb3735b9f6d9df, type: 3}
+    - target: {fileID: 662476628460519703, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
       propertyPath: _secondToWaitBeforeRecover
       value: 5
       objectReference: {fileID: 0}
@@ -860,7 +864,7 @@ PrefabInstance:
     - target: {fileID: 5084120637147076425, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: e1f4ac556d82d36479cb3735b9f6d9df, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8063822742593668174, guid: 05c5c22e08e38df4c9ccdb87e45da0c1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3036,7 +3040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
       propertyPath: _hitAllTargetsAtStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4008550532654003417, guid: 1ca1a4f4df45fd94e95c7bc4bc9d353b, type: 3}
       propertyPath: _targets.Array.data[0]
