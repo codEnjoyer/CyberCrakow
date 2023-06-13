@@ -132,6 +132,7 @@ MonoBehaviour:
   _maxLifeTime: 3
   _explodeOnTouch: 0
   _explosionSound: {fileID: 802405889720275471}
+  _bulletHole: {fileID: 5446374619845690269, guid: 9432cfd3c2a24e147b8a98609482f7c0, type: 3}
 --- !u!82 &802405889720275471
 AudioSource:
   m_ObjectHideFlags: 0
