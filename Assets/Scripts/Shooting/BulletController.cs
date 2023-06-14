@@ -66,12 +66,9 @@ public class BulletController : MonoBehaviour
         {
 
         }
-<<<<<<< HEAD:Assets/Scripts/BulletController.cs
 
-        //add Delay, to debug
-        //Invoke("Delay", 0.05f);
         Destroy(gameObject);
-=======
+
         if (_explosionSound != null)
         {
             _explosionSound.Play();
@@ -82,7 +79,7 @@ public class BulletController : MonoBehaviour
             //add Delay, to debug
             Invoke("Delay", 0.05f);
         }
->>>>>>> shooting_sounds:Assets/Scripts/Shooting/BulletController.cs
+
     }
 
     private void Delay()
