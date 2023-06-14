@@ -326,6 +326,17 @@
                 },
                 {
                     "name": "",
+                    "id": "1761383e-5f85-4311-878a-9fd64b9c5aab",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3e7e3ac1-85d9-4e99-9deb-4d0bc7daa925",
                     "path": "<Keyboard>/w",
                     "interactions": "",

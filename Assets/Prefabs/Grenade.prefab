@@ -44,8 +44,8 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5271774115202270402}
-  m_Enabled: 1
-  m_CastShadows: 1
+  m_Enabled: 0
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: -9035303427466704066, guid: c0249f981465c4e46adf282e3ad9b23d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,10 +293,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8102123548303249793, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -7868993322166608058, guid: 2a2c56ea9355e1e4f9a43c9bbd441b10, type: 3}
+    - target: {fileID: -6972960291267162418, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -9035303427466704066, guid: c0249f981465c4e46adf282e3ad9b23d, type: 3}
+    - target: {fileID: -1990968323811559735, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 6000276292587638491, guid: c0249f981465c4e46adf282e3ad9b23d, type: 3}
     - target: {fileID: 919132149155446097, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
       propertyPath: m_Name
       value: grenade
       objectReference: {fileID: 0}
+    - target: {fileID: 8449996119470504636, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -6642283102119247046, guid: e110bf58b6da2f94abbb722f65b40504, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92aad3bb0bdab34d88ce247928d4af8, type: 3}
 --- !u!4 &1815881905715241327 stripped

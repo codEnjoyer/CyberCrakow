@@ -97,7 +97,7 @@ public class BulletController : MonoBehaviour
 
     private void Delay()
     {
-        Debug.Log("Delay");
+        //Debug.Log("Delay");
         Destroy(gameObject);
     }
     private void DestroyExplosion()

@@ -35,13 +35,11 @@ namespace NPCAI
 
         [SerializeField] private bool _allowInvoke = true;
 
-        private WeaponInput _input;
 
         //public Vector3 directionToPlayer;
         private bool inSight;
         private void Awake()
         {
-            _input = new WeaponInput();
             //make sure magazine is full
             _bulletsLeft = _magazineSize;
             _readyToShoot = true;
@@ -49,12 +47,12 @@ namespace NPCAI
 
         private void OnEnable()
         {
-            _input.Enable();
+            _shootingSound = GetComponent<AudioSource>();
         }
 
         private void OnDisable()
         {
-            _input.Disable();
+  
         }
 
         // Update is called once per frame

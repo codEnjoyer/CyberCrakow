@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b56ee68f36d76a648a742b6874f4d4a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 6508995551730269089, guid: b3503113d1880054c8d5dbf18637305a, type: 3}
   data: {fileID: 11400000, guid: bdc000d20c3971e46a11ab4bb039a2f7, type: 2}
+  grid: {fileID: 0}
 --- !u!114 &2223828884505918298
 MonoBehaviour:
   m_ObjectHideFlags: 0
