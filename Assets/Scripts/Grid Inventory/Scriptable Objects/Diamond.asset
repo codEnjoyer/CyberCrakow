@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TilesWidthCount>k__BackingField: 1
   <TilesHeightCount>k__BackingField: 1
-  <Icon>k__BackingField: {fileID: 21300000, guid: e604298d62231a84e89f3612a139424a, type: 3}
-  <Model>k__BackingField: {fileID: 7410511407134982042, guid: e7d981a7156766d41a3f0d7882f6719d, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: 0c817fba899b3d844b5fef961fe99b4d, type: 3}
+  <Model>k__BackingField: {fileID: 5271774115202270402, guid: c0e038c229b152048b69495f7633a2a2, type: 3}

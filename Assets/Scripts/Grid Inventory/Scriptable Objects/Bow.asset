@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cc070c90d44116bf6d1b1dd436aa3e, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  <TilesWidthCount>k__BackingField: 3
-  <TilesHeightCount>k__BackingField: 2
-  <Icon>k__BackingField: {fileID: 21300000, guid: 3cbdb369b1ffa0c428911150fd718463, type: 3}
-  <Model>k__BackingField: {fileID: 7974985708995849621, guid: 1c8f4da70d02c5a458577c3d2a398dba, type: 3}
+  <TilesWidthCount>k__BackingField: 1
+  <TilesHeightCount>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 21300000, guid: 87c277b2d94747b4a9cc34830a693767, type: 3}
+  <Model>k__BackingField: {fileID: 6653551262305117878, guid: d503ac6e071095843bfcdc4f0f2169d0, type: 3}

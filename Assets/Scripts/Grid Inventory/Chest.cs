@@ -29,7 +29,7 @@ namespace Grid_Inventory
             base.Action();
             OpenChest();
             Deactivate();
-            Invoke(nameof(Recover), 0.1f);
+            Invoke(nameof(Recover), 0.01f);
         }
         public override void Deactivate()
         {
