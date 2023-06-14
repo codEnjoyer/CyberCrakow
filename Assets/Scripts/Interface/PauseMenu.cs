@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-
+using myStateMachine;
 namespace Interface
 {
     [RequireComponent(typeof(Canvas))]
@@ -11,24 +11,26 @@ namespace Interface
         /// Должен находиться в Canvas
         /// </summary>
         public static bool GameIsPaused { get; private set; }
-        private GameObject _pauseMenuUI;
-        private PlayerInput _controls;
+        [SerializeField]private GameObject _pauseMenuUI;
+        [SerializeField] public Character character;
+        PlayerInput pauseInput;
 
         private void Awake()
         {
-            _controls = new PlayerInput();
+            pauseInput = new PlayerInput();
         }
 
         private void Start()
         {
             _pauseMenuUI = transform.Find("Pause Menu").gameObject;
-            _controls.Player.Pause.performed += OnPauseKeyPressed;
+            pauseInput.Player.Pause.performed += OnPauseKeyPressed;
         }
 
         private void OnPauseKeyPressed(InputAction.CallbackContext obj) => SwitchPauseMenu();
 
         private void SwitchPauseMenu()
         {
+            Debug.Log("switch");
             if (GameIsPaused)
                 Resume();
             else
@@ -54,12 +56,20 @@ namespace Interface
         private void OpenPauseMenu(bool enable)
         {
             _pauseMenuUI.SetActive(enable);
+            Cursor.visible = enable;
+
+                Cursor.lockState = enable ? CursorLockMode.None : CursorLockMode.Locked;
+             
+
             Time.timeScale = enable ? 0f : 1f;
             GameIsPaused = enable;
+            if (enable)
+                character.input.Disable();
+            else character.input.Enable();
         }
 
-        private void OnEnable() => _controls.Enable();
+        private void OnEnable() => pauseInput.Enable();
 
-        private void OnDisable() => _controls.Disable();
+        private void OnDisable() => pauseInput.Disable();
     }
 }

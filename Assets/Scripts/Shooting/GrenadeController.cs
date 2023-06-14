@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using myStateMachine;
 
 public class GrenadeController : MonoBehaviour
 {
@@ -34,23 +35,15 @@ public class GrenadeController : MonoBehaviour
     [SerializeField] private bool _allowInvoke = true;
 
     private PlayerInput _input;
+    public Character character;
     private void Awake()
     {
-        _input = new PlayerInput();
+        _input = character.input;
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
     }
 
-    private void OnEnable()
-    {
-        _input.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _input.Disable();
-    }
 
     void Update()
     {

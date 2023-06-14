@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using myStateMachine;
 
 public class WeaponController : MonoBehaviour
 {
@@ -54,9 +55,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private bool _allowInvoke = true;
 
     private PlayerInput _input;
+    public Character character;
     private void Awake()
     {
-        _input = new PlayerInput();
+        _input = character.input;
         //make sure magazine is full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
@@ -64,15 +66,15 @@ public class WeaponController : MonoBehaviour
         _input.Player.Reload.performed += context => Reload();
     }
 
-    private void OnEnable()
-    {
-        _input.Enable();
-    }
+    //private void OnEnable()
+    //{
+    //    _input.Enable();
+    //}
 
-    private void OnDisable()
-    {
-        _input.Disable();
-    }
+    //private void OnDisable()
+    //{
+    //    _input.Disable();
+    //}
 
     // Update is called once per frame
     void Update()
