@@ -10,7 +10,7 @@ namespace NPCAI
         [SerializeField] private GameObject _bullet;
 
         //bullet force
-        [SerializeField] private float _shootForce, _upwardForce;
+        [SerializeField] private float _shootForce;
 
         //Gun stats
         [SerializeField] private float _timeBetweenShooting, _spread, _reloadTime, _timeBetweenShots;
@@ -18,7 +18,7 @@ namespace NPCAI
         private int _bulletsLeft, _bulletsShot;
 
         //bools 
-        private bool _shooting, _readyToShoot, _reloading, _aiming, _dropGrenade;
+        private bool _shooting, _readyToShoot, _reloading, _aiming;
 
         //References
         [SerializeField] private GameObject _fpsCam;
@@ -28,6 +28,10 @@ namespace NPCAI
 
         //Graphics
         [SerializeField] private GameObject _muzzleFlash;
+
+        //Sounds
+        [SerializeField] private AudioSource _shootingSound;
+        [SerializeField] private AudioSource _reloadSound;
 
         [SerializeField] private bool _allowInvoke = true;
 
@@ -56,7 +60,6 @@ namespace NPCAI
         // Update is called once per frame
         void Update()
         {
-            //MyInput();
             _shooting = inSight;
           
                 if (_shooting)
@@ -125,6 +128,10 @@ namespace NPCAI
                 {
                     Instantiate(_muzzleFlash, _attackPoint.position, Quaternion.identity);
                 }
+                if(_shootingSound != null)
+                {
+                    _shootingSound.Play();
+                }
                 _bulletsLeft--;
                 _bulletsShot++;
 
@@ -150,6 +157,10 @@ namespace NPCAI
         {
             if (!_reloading && _bulletsLeft < _magazineSize)
             {
+                if(_reloadSound != null)
+                {
+                    _reloadSound.Play();
+                }
                 _reloading = true;
                 Invoke("ReloadFinished", _reloadTime);
             }

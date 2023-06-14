@@ -135,6 +135,7 @@ public class WeaponController : MonoBehaviour
 
         // Instantiate bullet
         GameObject currentBullet = Instantiate(_bullet, _attackPoint.position, Quaternion.identity);
+        //if (currentBullet.GetComponent<BulletController>())
         //Rotate bullet to shoot direction
         currentBullet.transform.forward = directionWithoutSpread.normalized;
 
@@ -195,8 +196,10 @@ public class WeaponController : MonoBehaviour
         if (_aiming)
         {
             transform.position = Vector3.Lerp(transform.position, _aimingPosition.position + (transform.position - _sightTarget.position), _sightTime * Time.deltaTime);
-            Debug.Log("Aiming Position " + _aimingPosition.position);
-            Debug.Log("Gun Position " + transform.position);
+
+            //Debug.Log("Aiming Position " + _aimingPosition.position);
+            //Debug.Log("Gun Position " + transform.position);
+
             _fpsCam.fieldOfView = Mathf.MoveTowards(_fpsCam.fieldOfView, 60f / _zoomRatio, _sightTime * 7 * Time.deltaTime);
         }
         else

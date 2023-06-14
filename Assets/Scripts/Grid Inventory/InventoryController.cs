@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+using UnityEngine.InputSystem;
+using Grid_Inventory;
 namespace Grid_Inventory
 {
     [RequireComponent(typeof(InventoryHighlight))]
@@ -29,47 +30,49 @@ namespace Grid_Inventory
 
 
         [Header("For testing purposes")]
-        
-        [SerializeField] private KeyCode createRandomItemKey = KeyCode.Q;
-        [SerializeField] private KeyCode insertRandomItemKey = KeyCode.W;
-        [SerializeField] private KeyCode rotateItemKey = KeyCode.R;
 
         [SerializeField] private List<InventoryItemData> itemsPool;
         [SerializeField] private GameObject itemPrefab;
         [SerializeField] private RectTransform canvasRectTransform;
+        public PlayerInput input;
+        public OpenInventory opener;
+        public DropItem dropObject;
 
-        private void Awake()
+        private void Start()
         {
-            _inventoryHighlight = GetComponent<InventoryHighlight>();
+            input = new PlayerInput();
+            //Debug.Log(opener.isOpen);
+            input.Inventory.CreateRandomItem.performed += CreateRandomItem_performed;
+            input.Inventory.InsertRandomItem.performed += InsertRandomItem_performed;
+            input.Inventory.Rotate.performed += Rotate_performed;
+            input.Inventory.Click.performed += Click_performed;
+            input.Inventory.Drop.performed += Drop_performed;
+            //input.Enable();
         }
 
-        private void Update()
+        private void Drop_performed(InputAction.CallbackContext obj)
         {
-            DragSelectedItemIcon();
-
-            if (SelectedItemGrid is null)
+            //Debug.Log("Drop");
+            var tileGridPosition = GetTileGridPosition();
+            if (_selectedInventoryItem is null)
             {
-                _inventoryHighlight.Switch(false);
-                return;
+                PickUpSelectedItem(tileGridPosition);
             }
-
-            if (Input.GetKeyDown(createRandomItemKey))
+            if (_selectedInventoryItem != null)
             {
-                if (_selectedInventoryItem is null)
-                    CreateRandomItem();
+                dropObject.SpawnItem(_selectedInventoryItem.Data.Model);
+                _selectedItemImage = null;
+                Destroy(_selectedInventoryItem.gameObject);
+                _selectedInventoryItem = null;
             }
+        }
 
-            if (Input.GetKeyDown(insertRandomItemKey))
-                InsertRandomItem();
-            
-            if (Input.GetKeyDown(rotateItemKey))
-                RotateSelectedItem();
-            
-            HandleHighlighting();
-
-            if (Input.GetMouseButtonDown(0))
+        private void Click_performed(InputAction.CallbackContext obj)
+        {
+            if (_selectedItemGrid != null)
             {
                 var tileGridPosition = GetTileGridPosition();
+                //Debug.Log(tileGridPosition);
 
                 if (_selectedInventoryItem is null)
                 {
@@ -80,6 +83,64 @@ namespace Grid_Inventory
                     PlaceSelectedItem(tileGridPosition);
                 }
             }
+            else
+            {
+                if (_selectedInventoryItem is null)
+                    return;
+                else
+                {
+                    dropObject.SpawnItem(_selectedInventoryItem.Data.Model);
+                    _selectedItemImage = null;
+                    Destroy(_selectedInventoryItem.gameObject);
+                    _selectedInventoryItem = null;
+                }
+            }
+        }
+
+        private void Rotate_performed(InputAction.CallbackContext obj)
+        {
+            RotateSelectedItem();
+        }
+
+        private void InsertRandomItem_performed(InputAction.CallbackContext obj)
+        {
+            InsertRandomItem();
+        }
+
+        private void CreateRandomItem_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+        {
+            if (_selectedInventoryItem is null)
+                CreateRandomItem();
+        }
+
+
+        private void Awake()
+        {
+            _inventoryHighlight = GetComponent<InventoryHighlight>();
+        }
+
+        private void Update()
+        {
+            DragSelectedItemIcon();
+            //Debug.Log(SelectedItemGrid);
+            if (SelectedItemGrid is null)
+            {
+                _inventoryHighlight.Switch(false);
+                input.Disable();
+                if (opener.isOpen)
+                    input.Inventory.Click.Enable();
+                return;
+            }     
+            else 
+            {
+                if(opener.isOpen)
+                    input.Enable();
+            }
+
+            if (opener.isOpen)
+                HandleHighlighting();
+
+
         }
 
         private void RotateSelectedItem()
@@ -88,7 +149,7 @@ namespace Grid_Inventory
             _selectedInventoryItem.Rotate();
         }
 
-        private void InsertRandomItem()
+        public void InsertRandomItem()
         {
             CreateRandomItem();
             var itemToInsert = _selectedInventoryItem;
@@ -96,19 +157,18 @@ namespace Grid_Inventory
             InsertItem(itemToInsert);
         }
 
-        private void InsertItem(GridInventoryItem itemToInsert)
+        public void InsertItem(GridInventoryItem itemToInsert)
         {
             var pos = _selectedItemGrid.FindSpaceForItem(itemToInsert);
-
-            if (pos is null) return;
-
-            _selectedItemGrid.PlaceItem(itemToInsert, pos.Value);
-
+            //Debug.Log(pos);
+            if (pos != null)
+                _selectedItemGrid.PlaceItem(itemToInsert, pos.Value);
         }
 
         private Vector2Int GetTileGridPosition()
         {
             var dragPosition = Input.mousePosition;
+            //Debug.Log(SelectedItemGrid);
             if (_selectedInventoryItem is null) return SelectedItemGrid.GetTileGridPosition(dragPosition);
 
             dragPosition.x -= (_selectedInventoryItem.Width - 1) * ItemGrid.TileSizeWidth / 2f;
@@ -120,6 +180,10 @@ namespace Grid_Inventory
         private void HandleHighlighting()
         {
             var posOnGrid = GetTileGridPosition();
+            if (posOnGrid.x < 0)
+                posOnGrid.x = 0;
+            if (posOnGrid.y < 0)
+                posOnGrid.y = 0;
             if (posOnGrid == _previousPosition)
             {
                 return;
@@ -151,6 +215,17 @@ namespace Grid_Inventory
             }
         }
 
+        public void CreateItem(InventoryItemData data, ItemGrid grid)
+        {
+            var inventoryItem = Instantiate(itemPrefab).GetComponent<GridInventoryItem>();
+            _selectedItemImage = inventoryItem.GetComponent<RectTransform>();
+            _selectedItemImage.SetParent(grid._rectTransform);
+            inventoryItem.SetItemData(data);
+            inventoryItem.gameObject.transform.position = grid.transform.position;
+            _selectedItemGrid = grid;
+            InsertItem(inventoryItem);
+            _selectedItemGrid = null;
+        }
         private void CreateRandomItem()
         {
             var inventoryItem = Instantiate(itemPrefab).GetComponent<GridInventoryItem>();
@@ -161,9 +236,24 @@ namespace Grid_Inventory
             var selectedItemID = Random.Range(0, itemsPool.Count);
             inventoryItem.SetItemData(itemsPool[selectedItemID]);
         }
-
+        public void InsertCreatedRandomItem(ItemGrid grid)
+        {
+            Debug.Log("InsertRandom");
+            var inventoryItem = Instantiate(itemPrefab).GetComponent<GridInventoryItem>();
+            _selectedItemImage = inventoryItem.GetComponent<RectTransform>();
+            _selectedItemImage.SetParent(grid._rectTransform);
+            var selectedItemID = Random.Range(0, itemsPool.Count);
+            inventoryItem.SetItemData(itemsPool[selectedItemID]);
+            inventoryItem.gameObject.transform.position = grid.transform.position;
+            _selectedItemGrid = grid;
+            InsertItem(inventoryItem);
+            _selectedItemGrid = null;
+        }
         private void PlaceSelectedItem(Vector2Int tileGridPosition)
         {
+            //Debug.Log(_selectedInventoryItem);
+            //Debug.Log(tileGridPosition);
+            //Debug.Log(_overlappingInventoryItem);
             var isItemPlaced = SelectedItemGrid.PlaceItem(_selectedInventoryItem,
                 tileGridPosition, ref _overlappingInventoryItem);
             if (isItemPlaced)

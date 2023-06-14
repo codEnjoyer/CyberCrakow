@@ -124,7 +124,7 @@ MonoBehaviour:
   _explosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   _whatIsEnemies:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _bounciness: 0.41
   _explosionDamage: 0
   _explosionRange: 0
@@ -132,6 +132,8 @@ MonoBehaviour:
   _maxLifeTime: 3
   _explodeOnTouch: 0
   _explosionSound: {fileID: 802405889720275471}
+  _bulletHole: {fileID: 5446374619845690269, guid: 9432cfd3c2a24e147b8a98609482f7c0, type: 3}
+  _gun: {fileID: 7657355538373391656, guid: f69bf1e17ba544d409d11870ecc6000f, type: 3}
 --- !u!82 &802405889720275471
 AudioSource:
   m_ObjectHideFlags: 0

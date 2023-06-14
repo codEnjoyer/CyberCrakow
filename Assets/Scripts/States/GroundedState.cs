@@ -38,6 +38,9 @@ namespace myStateMachine
             {
                 stateMachine.ChangeState(character.air);
             }
+
+            if (character.input.Player.Slide.IsPressed() && (character.playerInput.x != 0 | character.playerInput.y != 0))
+                stateMachine.ChangeState(character.slide);
         }
         public override void PhysicsUpdate()
             {

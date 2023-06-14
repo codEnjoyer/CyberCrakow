@@ -20,7 +20,7 @@ public class NPCHealth : MonoBehaviour
             {
                 KillNPC();
                 Destroy(gameObject);
-                spawner.SpawnTank();
+                //spawner.SpawnTank();
             }
         }
         private void OnCollisionEnter(Collision other)

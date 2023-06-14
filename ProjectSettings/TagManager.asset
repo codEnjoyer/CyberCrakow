@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Bullet
   - Enemy
+  - Button
+  - Item
+  - MainGrid
+  - InventoryGrid
+  - ChestGrid
+  - Chest
   layers:
   - Default
   - TransparentFX
@@ -16,7 +22,7 @@ TagManager:
   - Bullet
   - Player
   - Player_Bullet
-  - 
+  - Interactable
   - 
   - 
   - 

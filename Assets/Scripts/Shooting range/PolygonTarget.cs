@@ -46,9 +46,10 @@ namespace Shooting_range
 
         private void Die()
         {
+            Debug.Log("die");
             OnDeath?.Invoke();
             PlayDeathSound();
-            // _targetAnimator.Play("TargetDie");
+            _targetAnimator.Play("TargetDie");
             _targetAnimator.SetBool(Hitted, true);
             StartCoroutine(RecoverAfterDie());
         }
