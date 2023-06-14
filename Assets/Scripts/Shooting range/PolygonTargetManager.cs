@@ -10,8 +10,8 @@ namespace Shooting_range
         [SerializeField] private bool _hitAllTargetsAtStart = true;
         [SerializeField] private float _secondsToWaitBeforeHit = 3f;
         [SerializeField] private float _secondsBetweenHits = 1f;
-        [SerializeField] private float _secondsToWaitBeforeRecover = 5f;
-        [SerializeField] private float _secondsBetweenRecovers = .5f;
+        // [SerializeField] private float _secondsToWaitBeforeRecover = 5f;
+        // [SerializeField] private float _secondsBetweenRecovers = .5f;
 
         private void Start()
         {
@@ -28,17 +28,17 @@ namespace Shooting_range
                 yield return new WaitForSeconds(_secondsBetweenHits);
             }
 
-            StartCoroutine(RecoverAllTargets());
+            // StartCoroutine(RecoverAllTargets());
         }
 
-        private IEnumerator RecoverAllTargets()
-        {
-            yield return new WaitForSeconds(_secondsToWaitBeforeRecover);
-            foreach (var target in _targets)
-            {
-                target.Recover();
-                yield return new WaitForSeconds(_secondsBetweenRecovers);
-            }
-        }
+        // private IEnumerator RecoverAllTargets()
+        // {
+        //     yield return new WaitForSeconds(_secondsToWaitBeforeRecover);
+        //     foreach (var target in _targets)
+        //     {
+        //         target.Recover();
+        //         yield return new WaitForSeconds(_secondsBetweenRecovers);
+        //     }
+        // }
     }
 }

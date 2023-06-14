@@ -22,6 +22,7 @@ namespace Shooting_range
         [SerializeField] private AudioClip _deathSound;
         [SerializeField] private AudioClip _recoverSound;
         [SerializeField] private float _secondToWaitBeforeRecover = 1f;
+        private static readonly int Hitted = Animator.StringToHash("Hitted");
 
         private void Start()
         {
@@ -45,9 +46,11 @@ namespace Shooting_range
 
         private void Die()
         {
+            Debug.Log("die");
             OnDeath?.Invoke();
             PlayDeathSound();
             _targetAnimator.Play("TargetDie");
+            _targetAnimator.SetBool(Hitted, true);
             StartCoroutine(RecoverAfterDie());
         }
 
@@ -62,7 +65,8 @@ namespace Shooting_range
         {
             OnRecover?.Invoke();
             PlayRecoverSound();
-            _targetAnimator.Play("TargetRecover");
+            // _targetAnimator.Play("TargetRecover");
+            _targetAnimator.SetBool(Hitted, false);
             Health = MaxHealth;
         }
 
