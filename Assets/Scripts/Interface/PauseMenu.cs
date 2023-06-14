@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Interface
@@ -21,14 +22,10 @@ namespace Interface
         private void Start()
         {
             _pauseMenuUI = transform.Find("Pause Menu").gameObject;
+            _controls.Player.Pause.performed += OnPauseKeyPressed;
         }
 
-        private void Update()
-        {
-            var pauseKeyPressed = _controls.Player.Pause.triggered;
-            if (pauseKeyPressed)
-                SwitchPauseMenu();
-        }
+        private void OnPauseKeyPressed(InputAction.CallbackContext obj) => SwitchPauseMenu();
 
         private void SwitchPauseMenu()
         {
