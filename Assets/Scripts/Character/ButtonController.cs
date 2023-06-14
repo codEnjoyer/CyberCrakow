@@ -4,51 +4,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-
+using Grid_Inventory;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField] private int rayLength;
     [SerializeField] private LayerMask layermaskInteract;
     [SerializeField] private string excludeLayer = null;
-    private PushButton raycastedButton;
+    private InteractableObject raycastedButton;
     public Transform orientation;
     [SerializeField] private Image crosshair = null;
     private bool doOnce;
-    private const string interactableTag = "Button";
+    private const string buttonTag = "Button";
+    private const string inventoryItem = "Item";
+    private const string chestTag = "Chest";
     //private Character character;
     public PlayerInput input;
+    OpenInventory opener;
+    public Camera camera;
     private void Awake()
     {
+        opener = GetComponent<OpenInventory>();
         input = new PlayerInput();
         input.Enable();
+        //camera = GetComponent<Camera>();
     }
 
 
     private void Update()
     {
         RaycastHit hit;
-        Vector3 fwd = orientation.TransformDirection(Vector3.forward);
-
-        int mask = 1<< LayerMask.NameToLayer(excludeLayer)| layermaskInteract.value;
-
-        //Debug.DrawRay(orientation.position, fwd);
-        if(Physics.Raycast(transform.position,fwd,out hit,rayLength,mask))
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        //Debug.D(ray);
+        //if(Physics.Raycast(transform.position,fwd,out hit,rayLength,layermaskInteract))
+        if (Physics.Raycast(ray, out hit,rayLength,layermaskInteract))
         {
-            if(hit.collider.CompareTag(interactableTag))
+            //Debug.Log("see mask");
+            if (hit.collider.CompareTag(buttonTag))
             {
                 //Debug.Log("see");
-                if (!doOnce)
-                {
-                    raycastedButton = hit.collider.gameObject.GetComponent<PushButton>();
-                }
-                doOnce = true;
+                    raycastedButton = hit.collider.gameObject.GetComponent<InteractableObject>();
                 if (input.Player.Interact.IsPressed())
                 {
-                    Debug.Log("pressed");
+                    //Debug.Log("pressed");
                     raycastedButton.Action();
                 }
             }
+            if (hit.collider.CompareTag(inventoryItem))
+            {
+                //Debug.Log("see");
+                    raycastedButton = hit.collider.gameObject.GetComponent<InteractableObject>();
 
+                if (input.Player.Interact.IsPressed())
+                {
+                    //Debug.Log("pressed");
+                    raycastedButton.Action();
+                    //opener.Open();
+                }
+            }
+            if (hit.collider.CompareTag(chestTag))
+            {
+                //Debug.Log("see");
+                raycastedButton = hit.collider.gameObject.GetComponent<InteractableObject>();
+
+                if (input.Player.Interact.IsPressed())
+                {
+                    //Debug.Log("pressed");
+                    raycastedButton.Action();
+                    //opener.Open();
+                }
+            }
         }
     }
 }

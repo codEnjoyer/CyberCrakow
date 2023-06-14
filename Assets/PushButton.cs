@@ -2,33 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PushButton : MonoBehaviour
+public class PushButton : InteractableObject
 {
     // Start is called before the first frame update
-    HordeStart actionScript;
-    public void Action()
+    ActionScript actionScript;
+    public override void Action()
     {
         actionScript.Activate();
-        Debug.Log("Action");
+        //Debug.Log("Action");
         Deactivate();
     }
 
-    public void Deactivate()
+    public override void Deactivate()
     {
         gameObject.SetActive(false);
     }
-    public void Recover()
+    public override void Recover()
     {
         gameObject.SetActive(true);
     }
     void Start()
     {
-        actionScript = GetComponent<HordeStart>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        actionScript = GetComponent<ActionScript>();
     }
 }

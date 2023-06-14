@@ -89,5 +89,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e2d0faf43176d4286a954f4580872e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilesWidthCount: 20
-  tilesHeightCount: 10

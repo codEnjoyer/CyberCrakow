@@ -10,9 +10,9 @@ namespace Grid_Inventory
         public const int TileSizeWidth = 32;
         public const int TileSizeHeight = 32;
 
-        private GridInventoryItem[,] _inventoryItemSlot;
+        public GridInventoryItem[,] _inventoryItemSlot;
 
-        private RectTransform _rectTransform;
+        public RectTransform _rectTransform;
 
         private Vector2 _positionOnGrid;
         private Vector2Int _tileGridPosition;
@@ -117,6 +117,8 @@ namespace Grid_Inventory
 
         private void FillItemTiles(GridInventoryItem inventoryItem, int posX, int posY)
         {
+            if (inventoryItem == null)
+                Debug.Log("null");
             for (var x = 0; x < inventoryItem.Width; x++)
             for (var y = 0; y < inventoryItem.Height; y++)
             {
@@ -165,6 +167,7 @@ namespace Grid_Inventory
 
         public GridInventoryItem GetItem(int posX, int posY)
         {
+            Debug.Log(posX + " " +  posY);
             return _inventoryItemSlot[posX, posY];
         }
 
@@ -175,11 +178,13 @@ namespace Grid_Inventory
 
         public Vector2Int? FindSpaceForItem(GridInventoryItem itemToInsert)
         {
+            //Debug.Log(itemToInsert);
             var maxPossibleX = tilesWidthCount - itemToInsert.Width + 1;
             var maxPossibleY = tilesHeightCount - itemToInsert.Height + 1;
             for(var x = 0; x < maxPossibleX; x++)
             for (var y = 0; y < maxPossibleY; y++)
             {
+                //Debug.Log(IsItemFits(itemToInsert, x, y));
                 if (IsItemFits(itemToInsert, x, y))
                     return new Vector2Int(x, y);
             }
@@ -189,10 +194,14 @@ namespace Grid_Inventory
 
         private bool IsItemFits(GridInventoryItem inventoryItem, int posX, int posY)
         {
+            Debug.Log(inventoryItem);
             for (var x = 0; x < inventoryItem.Width; x++)
             for (var y = 0; y < inventoryItem.Height; y++)
             {
-                if (_inventoryItemSlot[posX + x, posY + y] is not null)
+                    Debug.Log(posX + " " + posY);
+                    Debug.Log(tilesWidthCount);
+;                    Debug.Log(_inventoryItemSlot[posX + x, posY + y]);
+                    if (_inventoryItemSlot[posX + x, posY + y] is not null )
                     return false;
             }
 

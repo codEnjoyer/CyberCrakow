@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,8 @@ namespace myStateMachine
         public float airMultiplyer;
         public bool readyToJump = true;
         public float startYScale;
+        public float startWeaponYScale;
+        public float adjustedWeaponYScale;
         public float slideYScale;
         public float slideForce = 5f;
 
@@ -57,7 +60,8 @@ namespace myStateMachine
         [HideInInspector] public StaminaController staminaController;
         [HideInInspector] public HealthController healthController;
         public PlayerInput input;
-        [SerializeField] Camera fpsCam; 
+        [SerializeField] public GameObject weapon; 
+        
 
         private void Awake()
         {
@@ -104,6 +108,8 @@ namespace myStateMachine
             slide = new SlidingState(this, movementSM);
             movementSM.Initialize(standing);
             startYScale = transform.localScale.y;
+            startWeaponYScale = weapon.transform.localScale.y;
+            adjustedWeaponYScale = weapon.transform.localScale.y * ((float)Math.Pow(slideYScale,-1));
         }
         private void Update()
         {
