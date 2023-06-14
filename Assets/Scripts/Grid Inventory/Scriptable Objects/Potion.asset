@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Potion
   m_EditorClassIdentifier: 
   <TilesWidthCount>k__BackingField: 1
-  <TilesHeightCount>k__BackingField: 2
-  <Icon>k__BackingField: {fileID: 21300000, guid: 832cdcd75a8afd144b7725a421423399, type: 3}
+  <TilesHeightCount>k__BackingField: 1
+  <Icon>k__BackingField: {fileID: 21300000, guid: 9a1ab8af8c446204e989a90f18305caf, type: 3}
   <Model>k__BackingField: {fileID: 8491208356560975223, guid: 0ce9aa19c8d5ab94f9543a7b456bd83a, type: 3}

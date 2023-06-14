@@ -332,6 +332,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b07819a-ee0c-4c7f-a9c7-18463475bb2a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -339,17 +348,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c46894a9-c2c6-43c4-9765-7e1657d41e32"",
                     ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Open"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""1761383e-5f85-4311-878a-9fd64b9c5aab"",
-                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -411,6 +409,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5aca44af-8a3e-4a72-8055-9c1f950ecca3"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -449,6 +458,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Inventory_CreateRandomItem = m_Inventory.FindAction("CreateRandomItem", throwIfNotFound: true);
         m_Inventory_Drop = m_Inventory.FindAction("Drop", throwIfNotFound: true);
         m_Inventory_Click = m_Inventory.FindAction("Click", throwIfNotFound: true);
+        m_Inventory_Close = m_Inventory.FindAction("Close", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -634,6 +644,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Inventory_CreateRandomItem;
     private readonly InputAction m_Inventory_Drop;
     private readonly InputAction m_Inventory_Click;
+    private readonly InputAction m_Inventory_Close;
     public struct InventoryActions
     {
         private @PlayerInput m_Wrapper;
@@ -644,6 +655,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @CreateRandomItem => m_Wrapper.m_Inventory_CreateRandomItem;
         public InputAction @Drop => m_Wrapper.m_Inventory_Drop;
         public InputAction @Click => m_Wrapper.m_Inventory_Click;
+        public InputAction @Close => m_Wrapper.m_Inventory_Close;
         public InputActionMap Get() { return m_Wrapper.m_Inventory; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -671,6 +683,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Click.started += instance.OnClick;
             @Click.performed += instance.OnClick;
             @Click.canceled += instance.OnClick;
+            @Close.started += instance.OnClose;
+            @Close.performed += instance.OnClose;
+            @Close.canceled += instance.OnClose;
         }
 
         private void UnregisterCallbacks(IInventoryActions instance)
@@ -693,6 +708,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Click.started -= instance.OnClick;
             @Click.performed -= instance.OnClick;
             @Click.canceled -= instance.OnClick;
+            @Close.started -= instance.OnClose;
+            @Close.performed -= instance.OnClose;
+            @Close.canceled -= instance.OnClose;
         }
 
         public void RemoveCallbacks(IInventoryActions instance)
@@ -740,5 +758,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnCreateRandomItem(InputAction.CallbackContext context);
         void OnDrop(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+        void OnClose(InputAction.CallbackContext context);
     }
 }

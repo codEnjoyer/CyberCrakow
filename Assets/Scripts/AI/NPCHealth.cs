@@ -25,10 +25,11 @@ public class NPCHealth : MonoBehaviour
         }
         private void OnCollisionEnter(Collision other)
         {
-            if (!other.gameObject.TryGetComponent<Bullet>(out var bullet)) return;
+        Debug.Log("collision");
+        if (!other.gameObject.TryGetComponent<Bullet>(out var bullet)) return;
             {
                 GetNPCDamage(bullet.Damage);
-                //Debug.Log("hit");
+                Debug.Log("hit");
             }
         }
     }

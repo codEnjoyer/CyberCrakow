@@ -24,15 +24,23 @@ public class OpenInventory : MonoBehaviour
         character = GetComponent<Character>();
         cameraMovement = playerCam.GetComponent<CameraMovement>();        
         input.Enable();
-        input.Inventory.Open.performed += Inventory_performed; 
+        input.Inventory.Open.performed += Inventory_performed;
+            input.Inventory.Close.performed += Close_performed;
         controller.input.Disable();
         InventoryCanvas.gameObject.SetActive(false);
         }
-    //private void OnEnable()
-    //{
-    //    InventoryCanvas.gameObject.SetActive(false);
-    //}
-    private void Inventory_performed(InputAction.CallbackContext obj)
+
+        private void Close_performed(InputAction.CallbackContext obj)
+        {
+            if (isOpen)
+                Close();
+        }
+
+        //private void OnEnable()
+        //{
+        //    InventoryCanvas.gameObject.SetActive(false);
+        //}
+        private void Inventory_performed(InputAction.CallbackContext obj)
     {
         if (!isOpen)
         {
