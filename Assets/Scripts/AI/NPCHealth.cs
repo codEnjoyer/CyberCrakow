@@ -9,6 +9,12 @@ public class NPCHealth : MonoBehaviour
         public float enemyHealth = 100;
 
         public SpawnerScript spawner;
+
+        AudioSource hitSound;
+    private void Start()
+    {
+        hitSound = GetComponent<AudioSource>();
+    }
         public void KillNPC()
         {
             Debug.Log("killNPC");
@@ -29,6 +35,7 @@ public class NPCHealth : MonoBehaviour
         if (!other.gameObject.TryGetComponent<Bullet>(out var bullet)) return;
             {
                 GetNPCDamage(bullet.Damage);
+            hitSound.Play();
                 Debug.Log("hit");
             }
         }
